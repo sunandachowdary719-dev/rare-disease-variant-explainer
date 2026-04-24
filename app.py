@@ -143,7 +143,6 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
-/* More conditions box */
 .more-box {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
@@ -160,7 +159,7 @@ html, body, [class*="css"] {
     margin: 0.2rem 0.8rem;
 }
 
-/* Global buttons — dark */
+/* Global buttons */
 .stButton > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -174,10 +173,9 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
-/* Category buttons inside more-box — light style */
+/* Category buttons inside more-box */
 .more-box .stButton > button {
     background: transparent !important;
-    background-color: transparent !important;
     color: #1e293b !important;
     border: none !important;
     border-radius: 6px !important;
@@ -193,31 +191,34 @@ html, body, [class*="css"] {
     opacity: 1 !important;
 }
 
-/* Condition items inside more-box — plain text style */
-.more-box .cond-item .stButton > button,
-.more-box .cond-item .stButton > button:focus,
-.more-box .cond-item .stButton > button:active {
-    background: transparent !important;
-    background-color: transparent !important;
-    color: #374151 !important;
-    border: none !important;
-    border-radius: 4px !important;
-    padding: 0.3rem 0.8rem 0.3rem 1.6rem !important;
+/* Nuclear override for condition items */
+div.cond-item button,
+div.cond-item > div > button,
+div.cond-item .stButton button,
+[class*="cond-item"] button {
+    all: unset !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 0.35rem 0.8rem 0.35rem 1.4rem !important;
     font-size: 0.82rem !important;
     font-weight: 400 !important;
-    width: 100% !important;
-    text-align: left !important;
-    box-shadow: none !important;
-    letter-spacing: 0 !important;
-    outline: none !important;
+    color: #374151 !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif !important;
+    line-height: 1.4 !important;
 }
-.more-box .cond-item .stButton > button:hover {
-    background-color: #F3F4F6 !important;
+div.cond-item button:hover,
+div.cond-item > div > button:hover,
+div.cond-item .stButton button:hover,
+[class*="cond-item"] button:hover {
+    background: #F3F4F6 !important;
     color: #111827 !important;
-    opacity: 1 !important;
 }
 
-/* More toggle button */
+/* More toggle */
 .more-toggle > div > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -589,7 +590,8 @@ if st.session_state.show_more:
 
             if is_active:
                 for label_cond, variant in more_conditions[category].items():
-                    st.markdown('<div class="cond-item">', unsafe_allow_html=True)
+                    safe_id = re.sub(r'[^a-zA-Z0-9]', '', variant)
+                    st.markdown(f'<div id="cond-{safe_id}" class="cond-item">', unsafe_allow_html=True)
                     if st.button(label_cond, key=f"cond_{variant}"):
                         st.session_state.selected_variant = variant
                         st.session_state.show_more = False
