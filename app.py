@@ -17,8 +17,13 @@ st.markdown("""
 
 html, body, [class*="css"] {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
-    background-color: #F9FAFB;
-    color: #0F172A;
+    background-color: #F9FAFB !important;
+    color: #0F172A !important;
+    color-scheme: light !important;
+}
+
+* {
+    color-scheme: light !important;
 }
 .main { background-color: #F9FAFB; }
 .block-container {
