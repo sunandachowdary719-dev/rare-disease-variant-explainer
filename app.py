@@ -849,9 +849,12 @@ if st.session_state.show_more:
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Text input with keyboard submit ───────────────────────
+if st.session_state.selected_variant:
+    st.session_state["variant_input_field"] = st.session_state.selected_variant
+    st.session_state.selected_variant = ""
+
 variant_input = st.text_input(
     "Or type any variant or disease name:",
-    value=st.session_state.selected_variant,
     placeholder="e.g. BRCA1 c.5266dupC or 'Huntington's disease'",
     key="variant_input_field"
 )
