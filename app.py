@@ -154,42 +154,82 @@ html, body, [class*="css"] {
     margin-bottom: 0.8rem;
     max-width: 280px;
 }
-.more-box-cat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.52rem 1rem;
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: #1e293b;
-    cursor: pointer;
-    border-radius: 6px;
-    margin: 0 0.3rem;
-    transition: background 0.1s;
-}
-.more-box-cat:hover { background: #F8FAFC; }
-.more-box-cat-active {
-    background: #F1F5F9;
-    color: #0f172a;
-    font-weight: 600;
-}
-.more-box-arrow { color: #94A3B8; font-size: 0.75rem; }
-.more-box-item {
-    padding: 0.42rem 1rem 0.42rem 1.6rem;
-    font-size: 0.83rem;
-    color: #2563eb;
-    cursor: pointer;
-    border-radius: 6px;
-    margin: 0 0.3rem;
-}
-.more-box-item:hover { background: #EFF6FF; }
 .more-box-divider {
     border: none;
     border-top: 1px solid #F1F5F9;
     margin: 0.2rem 0.8rem;
 }
 
-/* Buttons */
+/* Global buttons — dark */
+.stButton > button {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0.62rem 1.6rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif !important;
+    font-size: 0.92rem !important;
+    font-weight: 500 !important;
+    transition: opacity 0.15s !important;
+}
+.stButton > button:hover { opacity: 0.84 !important; }
+
+/* Category buttons inside more-box — light style */
+.more-box .stButton > button {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #1e293b !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 0.45rem 0.8rem !important;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    width: 100% !important;
+    text-align: left !important;
+    box-shadow: none !important;
+}
+.more-box .stButton > button:hover {
+    background-color: #F8FAFC !important;
+    opacity: 1 !important;
+}
+
+/* Condition items inside more-box — plain text style */
+.more-box .cond-item .stButton > button,
+.more-box .cond-item .stButton > button:focus,
+.more-box .cond-item .stButton > button:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #374151 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 0.3rem 0.8rem 0.3rem 1.6rem !important;
+    font-size: 0.82rem !important;
+    font-weight: 400 !important;
+    width: 100% !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    letter-spacing: 0 !important;
+    outline: none !important;
+}
+.more-box .cond-item .stButton > button:hover {
+    background-color: #F3F4F6 !important;
+    color: #111827 !important;
+    opacity: 1 !important;
+}
+
+/* More toggle button */
+.more-toggle > div > button {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0.5rem 1.1rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    width: auto !important;
+}
+
+/* Inputs */
 .stTextInput > div > div > input {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
@@ -208,87 +248,6 @@ html, body, [class*="css"] {
     border: 1px solid #E2E8F0 !important;
     border-radius: 10px !important;
     color: #0F172A !important;
-}
-.stButton > button {
-    background: #0f172a !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 10px !important;
-    padding: 0.62rem 1.6rem !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif !important;
-    font-size: 0.92rem !important;
-    font-weight: 500 !important;
-    transition: opacity 0.15s !important;
-}
-.stButton > button:hover { opacity: 0.84 !important; }
-
-/* ADD THIS LINE RIGHT HERE */
-.cond-item .stButton > button { background: transparent !important; color: #374151 !important; border: none !important; box-shadow: none !important; }
-
-/* Category row buttons — invisible style */
-.cat-row-btn > div > button {
-    background: transparent !important;
-    color: #1e293b !important;
-    border: none !important;
-    border-radius: 6px !important;
-    padding: 0.45rem 0.8rem !important;
-    font-size: 0.88rem !important;
-    font-weight: 500 !important;
-    width: 100% !important;
-    text-align: left !important;
-    box-shadow: none !important;
-    justify-content: flex-start !important;
-}
-.cat-row-btn > div > button:hover {
-    background: #F8FAFC !important;
-    opacity: 1 !important;
-}
-.cat-row-btn-active > div > button {
-    background: #F1F5F9 !important;
-    color: #0f172a !important;
-    font-weight: 600 !important;
-    border: none !important;
-    border-radius: 6px !important;
-    padding: 0.45rem 0.8rem !important;
-    font-size: 0.88rem !important;
-    width: 100% !important;
-    text-align: left !important;
-    box-shadow: none !important;
-}
-
-.cond-item > div > button,
-.cond-item > div > button:focus,
-.cond-item > div > button:active {
-    background: transparent !important;
-    background-color: transparent !important;
-    color: #374151 !important;
-    border: none !important;
-    border-radius: 4px !important;
-    padding: 0.32rem 0.8rem 0.32rem 1.6rem !important;
-    font-size: 0.82rem !important;
-    font-weight: 400 !important;
-    width: 100% !important;
-    text-align: left !important;
-    box-shadow: none !important;
-    letter-spacing: 0 !important;
-    outline: none !important;
-}
-.cond-item > div > button:hover {
-    background-color: #F3F4F6 !important;
-    color: #111827 !important;
-    opacity: 1 !important;
-}
-
-/* More toggle */
-.more-toggle > div > button {
-    background: #0f172a !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 10px !important;
-    padding: 0.5rem 1.1rem !important;
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    width: auto !important;
 }
 
 /* Tabs */
@@ -605,7 +564,7 @@ with drop_col:
 
 with more_col:
     st.markdown("<div style='margin-top:1.85rem'></div>", unsafe_allow_html=True)
-    toggle_label = "✕ Close" if st.session_state.show_more else "More conditions →"
+    toggle_label = "✕ Close" if st.session_state.show_more else "More →"
     st.markdown('<div class="more-toggle">', unsafe_allow_html=True)
     if st.button(toggle_label, key="toggle_more"):
         st.session_state.show_more = not st.session_state.show_more
@@ -613,40 +572,31 @@ with more_col:
         st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── Compact inline more-conditions box ────────────────────
+# ── More conditions box ────────────────────────────────────
 if st.session_state.show_more:
     box_col, _ = st.columns([1, 3])
     with box_col:
         st.markdown('<div class="more-box">', unsafe_allow_html=True)
-
         categories = list(more_conditions.keys())
+
         for idx, category in enumerate(categories):
             is_active = st.session_state.active_category == category
-            cat_class = "cat-row-btn-active" if is_active else "cat-row-btn"
             arrow = "▾" if is_active else "›"
-            label = f"{arrow}  {category}"
 
-            st.markdown(f'<div class="{cat_class}">', unsafe_allow_html=True)
-            if st.button(label, key=f"cat_{category}"):
-                if st.session_state.active_category == category:
-                    st.session_state.active_category = None
-                else:
-                    st.session_state.active_category = category
+            if st.button(f"{arrow}  {category}", key=f"cat_{category}"):
+                st.session_state.active_category = None if is_active else category
                 st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
 
-            # Inline expanded conditions
             if is_active:
                 for label_cond, variant in more_conditions[category].items():
                     st.markdown('<div class="cond-item">', unsafe_allow_html=True)
-                    if st.button(f"  {label_cond}", key=f"cond_{variant}"):
+                    if st.button(label_cond, key=f"cond_{variant}"):
                         st.session_state.selected_variant = variant
                         st.session_state.show_more = False
                         st.session_state.active_category = None
                         st.rerun()
                     st.markdown('</div>', unsafe_allow_html=True)
 
-            # Divider between categories (not after last)
             if idx < len(categories) - 1:
                 st.markdown('<hr class="more-box-divider">', unsafe_allow_html=True)
 
