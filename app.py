@@ -54,7 +54,8 @@ def get_omim_summary(gene_symbol):
     diseases, inheritance_set = [], set()
     for item in phenotype_list:
         p = item.get("phenotypeMap",{})
-        d = p.replace("{","").replace("}","").strip() if (d := p.get("phenotype","")) else ""
+      d = p.get("phenotype", "")
+      d = d.replace("{","").replace("}","").strip()
         inh = p.get("phenotypeInheritance","")
         if d and "?" not in d:
             diseases.append(d)
