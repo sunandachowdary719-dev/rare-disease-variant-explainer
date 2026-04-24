@@ -22,16 +22,15 @@ html, body, [class*="css"] {
 }
 .main { background-color: #F9FAFB; }
 .block-container {
-    padding-top: 4rem;
+    padding-top: 3rem;
     padding-left: 4rem;
     padding-right: 4rem;
     max-width: 100%;
 }
 
-/* Hero */
 .hero-wrap {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
 }
 .hero-title {
     font-size: 3.8rem;
@@ -39,7 +38,7 @@ html, body, [class*="css"] {
     color: #0F172A;
     letter-spacing: -0.04em;
     line-height: 1.1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 .hero-desc {
     font-size: 1rem;
@@ -47,15 +46,14 @@ html, body, [class*="css"] {
     line-height: 1.7;
     font-weight: 400;
     max-width: 560px;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
 }
 .hero-divider {
     border: none;
     border-top: 1px solid #E2E8F0;
-    margin: 2rem 0;
+    margin: 1.2rem 0;
 }
 
-/* Badges */
 .badge-done {
     display: inline-block;
     background: #16a34a;
@@ -79,14 +77,18 @@ html, body, [class*="css"] {
 .dot-amber { width:9px; height:9px; border-radius:50%; background:#d97706; display:inline-block; }
 .dot-red   { width:9px; height:9px; border-radius:50%; background:#dc2626; display:inline-block; }
 
-/* Cards */
 .card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 14px;
-    padding: 1.4rem 1.5rem 1.1rem 1.5rem;
+    padding: 1.4rem 1.5rem 1.4rem 1.5rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    height: 100%;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
 }
 .card-green { border-left: 3px solid #16a34a; }
 .card-amber { border-left: 3px solid #d97706; }
@@ -111,6 +113,10 @@ html, body, [class*="css"] {
     line-height: 1.75;
     color: #334155;
     font-weight: 400;
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 .family-line {
     font-size: 0.81rem;
@@ -119,9 +125,9 @@ html, body, [class*="css"] {
     margin-top: 0.9rem;
     padding-top: 0.7rem;
     border-top: 1px solid #F1F5F9;
+    word-wrap: break-word;
 }
 
-/* Section label */
 .section-label {
     font-size: 0.68rem;
     font-weight: 600;
@@ -134,7 +140,6 @@ html, body, [class*="css"] {
 }
 .label-example { background: #f0fdf4; color: #16a34a; }
 
-/* Variant chip */
 .variant-chip {
     background: #eff6ff;
     border: 1px solid #bfdbfe;
@@ -145,7 +150,6 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
-/* Input */
 .stTextInput > div > div > input {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
@@ -160,7 +164,6 @@ html, body, [class*="css"] {
     box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
 }
 
-/* Selectbox */
 .stSelectbox > div > div {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
@@ -168,7 +171,6 @@ html, body, [class*="css"] {
     color: #0F172A !important;
 }
 
-/* Main explain button */
 .stButton > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -182,7 +184,6 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
-/* Footer */
 .footer-info {
     font-size: 0.76rem;
     color: #94A3B8;
@@ -193,28 +194,15 @@ html, body, [class*="css"] {
     line-height: 1.6;
 }
 
-/* More conditions expander — compact */
-.streamlit-expanderHeader {
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
-    color: #64748B !important;
-    background: #F1F5F9 !important;
-    border-radius: 8px !important;
-    padding: 0.3rem 0.8rem !important;
-    border: 1px solid #E2E8F0 !important;
-}
-
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-# ── Keys ───────────────────────────────────────────────────
 ANTHROPIC_KEY = st.secrets["ANTHROPIC_KEY"]
 OMIM_KEY = st.secrets["OMIM_KEY"]
 
-# ── Helpers ────────────────────────────────────────────────
 def is_disease_name(text):
     return not any(c in text for c in ["c.", "p.", "rs", "del", "dup", "ins", ">"])
 
@@ -418,15 +406,15 @@ st.markdown('''
 <div class="hero-wrap">
     <div class="hero-title">Variant Explainer</div>
     <div class="hero-desc">
-        Built for patients, clinicians, and genetic counsellors who need clear answers from complex genetic data.<br>
-        Paste any genetic variant or disease name and get three tailored plain-English explanations instantly.<br>
+        Built for patients, clinicians, and genetic counsellors who need clear answers from complex genetic data.
+        Paste any genetic variant or disease name and get three tailored plain-English explanations instantly.
         Data pulled live from ClinVar and OMIM.
     </div>
 </div>
 <hr class="hero-divider">
 ''', unsafe_allow_html=True)
 
-# ── Input row ──────────────────────────────────────────────
+# ── Input ──────────────────────────────────────────────────
 common_variants = {
     "Select a condition...": "",
     "Breast/Ovarian Cancer (BRCA1)": "BRCA1 c.5266dupC",
@@ -469,8 +457,7 @@ more_conditions = {
     },
 }
 
-# Dropdown + More conditions side by side
-drop_col, more_col = st.columns([4, 1])
+drop_col, more_col, spacer = st.columns([3, 1, 2])
 
 with drop_col:
     selected = st.selectbox("Quick select a condition:", list(common_variants.keys()))
@@ -520,7 +507,7 @@ if not run_button and not st.session_state.example_shown:
     example_sections = {
         "patient": "You have a change in your BRCA1 gene that significantly increases your lifetime risk of breast and ovarian cancer. This change is well-studied and classified as disease-causing by leading genetics experts. Your doctor will discuss screening options and preventive measures with you. Note: This is not medical advice.",
         "gp": "This patient carries a pathogenic frameshift variant in BRCA1 (c.5266dupC), classified as disease-causing by expert panel review across 94 ClinVar submissions. BRCA1-related cancer predisposition follows autosomal dominant inheritance, meaning first-degree relatives have a 50% chance of carrying the variant. Referral to clinical genetics and discussion of enhanced surveillance or risk-reduction options is recommended. Note: This is not medical advice.",
-        "counsellor": "The variant NM_007294.4(BRCA1):c.5266dupC introduces a frameshift causing premature protein truncation (p.Gln1756ProfsTer25), classified Pathogenic with expert panel review across 94 submissions. Loss of BRCA1 function impairs homologous recombination DNA repair, conferring substantially elevated lifetime risk for breast and ovarian cancer. Inheritance is autosomal dominant; cascade testing of first-degree relatives is indicated. Note: This is not medical advice.",
+        "counsellor": "The variant NM_007294.4(BRCA1):c.5266dupC introduces a frameshift causing premature protein truncation, classified Pathogenic with expert panel review across 94 submissions. Loss of BRCA1 function impairs homologous recombination DNA repair, conferring substantially elevated lifetime risk for breast and ovarian cancer. Inheritance is autosomal dominant; cascade testing of first-degree relatives is indicated. Note: This is not medical advice.",
     }
     render_output(example_clinvar, example_omim, example_sections, is_example=True)
 
