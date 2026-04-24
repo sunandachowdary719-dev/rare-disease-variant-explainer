@@ -28,10 +28,7 @@ html, body, [class*="css"] {
     max-width: 100%;
 }
 
-.hero-wrap {
-    text-align: center;
-    margin-bottom: 1rem;
-}
+.hero-wrap { text-align: center; margin-bottom: 1rem; }
 .hero-title {
     font-size: 3.8rem;
     font-weight: 700;
@@ -100,7 +97,6 @@ html, body, [class*="css"] {
 .card-green { border-left: 3px solid #16a34a; }
 .card-amber { border-left: 3px solid #d97706; }
 .card-red   { border-left: 3px solid #dc2626; }
-
 .card-role {
     font-size: 0.68rem;
     font-weight: 600;
@@ -147,22 +143,64 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
-/* Category panel */
-.cat-panel {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: 12px;
-    padding: 0.8rem 1rem;
-    margin-top: 0.6rem;
+/* More conditions overlay panel */
+.more-panel {
+    background: #1a1f2e;
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    margin-top: 0.5rem;
     margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
 }
-.cat-panel-label {
-    font-size: 0.72rem;
+
+/* Floating dropdown */
+.dropdown-overlay {
+    position: relative;
+    z-index: 1000;
+}
+.floating-dropdown {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+    padding: 0.6rem 0;
+    min-width: 220px;
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+    border: 1px solid #F1F5F9;
+}
+.dropdown-category-label {
+    font-size: 0.65rem;
     font-weight: 600;
-    color: #94A3B8;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    color: #94A3B8;
+    padding: 0.4rem 1rem 0.5rem 1rem;
+    border-bottom: 1px solid #F1F5F9;
+    margin-bottom: 0.2rem;
+}
+.dropdown-item {
+    padding: 0.55rem 1rem;
+    font-size: 0.88rem;
+    color: #1e293b;
+    cursor: pointer;
+    transition: background 0.12s;
+    border-radius: 6px;
+    margin: 0 0.3rem;
+}
+.dropdown-item:hover {
+    background: #F1F5F9;
+}
+
+/* Page dim overlay when dropdown open */
+.dim-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.08);
+    z-index: 999;
+    pointer-events: none;
 }
 
 /* Inputs */
@@ -186,7 +224,7 @@ html, body, [class*="css"] {
     color: #0F172A !important;
 }
 
-/* Buttons — default dark */
+/* All buttons dark by default */
 .stButton > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -200,56 +238,57 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
-/* Category buttons — light style */
-.cat-btn > div > button {
-    background: #F1F5F9 !important;
-    color: #334155 !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 8px !important;
-    padding: 0.35rem 1rem !important;
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
-    width: 100% !important;
-}
-.cat-btn-active > div > button {
+/* Category pill buttons */
+.pill-btn > div > button {
     background: #0f172a !important;
     color: #ffffff !important;
-    border: 1px solid #0f172a !important;
-    border-radius: 8px !important;
-    padding: 0.35rem 1rem !important;
+    border: none !important;
+    border-radius: 999px !important;
+    padding: 0.38rem 1.1rem !important;
     font-size: 0.82rem !important;
     font-weight: 500 !important;
-    width: 100% !important;
+    width: auto !important;
+    letter-spacing: 0.01em !important;
+}
+.pill-btn-active > div > button {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 999px !important;
+    padding: 0.38rem 1.1rem !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    width: auto !important;
 }
 
-/* Condition buttons — blue ghost */
-.condition-btn > div > button {
-    background: #FFFFFF !important;
-    color: #2563eb !important;
-    border: 1px solid #BFDBFE !important;
-    border-radius: 8px !important;
-    padding: 0.3rem 0.9rem !important;
-    font-size: 0.82rem !important;
+/* Condition item buttons */
+.cond-item > div > button {
+    background: transparent !important;
+    color: #1e293b !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.88rem !important;
     font-weight: 400 !important;
     width: 100% !important;
-    margin-bottom: 0.25rem !important;
     text-align: left !important;
+    box-shadow: none !important;
 }
-.condition-btn > div > button:hover {
-    background: #EFF6FF !important;
+.cond-item > div > button:hover {
+    background: #F1F5F9 !important;
     opacity: 1 !important;
 }
 
-/* More conditions toggle button */
-.more-btn > div > button {
-    background: #F1F5F9 !important;
-    color: #334155 !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 8px !important;
-    padding: 0.38rem 1rem !important;
-    font-size: 0.82rem !important;
+/* More toggle button */
+.more-toggle > div > button {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0.5rem 1.2rem !important;
+    font-size: 0.85rem !important;
     font-weight: 500 !important;
-    width: 100% !important;
+    width: auto !important;
 }
 
 /* Tabs */
@@ -304,6 +343,36 @@ if "active_category" not in st.session_state:
     st.session_state.active_category = None
 if "selected_variant" not in st.session_state:
     st.session_state.selected_variant = ""
+
+# ── Condition mapping ──────────────────────────────────────
+more_conditions = {
+    "Cancer Risk": {
+        "BRCA1 c.5266dupC": "BRCA1 c.5266dupC",
+        "BRCA2 c.5946delT": "BRCA2 c.5946delT",
+        "MLH1 c.1852_1853delAAinsGC": "MLH1 c.1852_1853delAAinsGC",
+        "TP53 c.817C>T": "TP53 c.817C>T",
+    },
+    "Cardiac": {
+        "MYBPC3 c.2905+1G>A": "MYBPC3 c.2905+1G>A",
+        "SCN5A c.4900G>A": "SCN5A c.4900G>A",
+        "LDLR c.1646G>A": "LDLR c.1646G>A",
+    },
+    "Neurological": {
+        "Huntington's Disease": "HTT c.54GCA",
+        "Parkinson's LRRK2": "LRRK2 c.6055G>A",
+        "Fragile X": "FMR1 c.1A>G",
+    },
+    "Metabolic": {
+        "PKU": "PAH c.1066-11G>A",
+        "Gaucher Disease": "GBA c.1226A>G",
+        "Tay-Sachs": "HEXA c.1274_1277dupTATC",
+    },
+    "Other": {
+        "Cystic Fibrosis": "CFTR c.1521_1523delCTT",
+        "Marfan Syndrome": "FBN1 c.1453C>T",
+        "Ehlers-Danlos Syndrome": "COL5A1 c.1867C>T",
+    },
+}
 
 # ── Helpers ────────────────────────────────────────────────
 def is_disease_name(text):
@@ -444,7 +513,6 @@ def get_confidence(review_status, significance):
 
 def render_output(clinvar, omim, sections):
     st.markdown('<span class="badge-done">Done</span>', unsafe_allow_html=True)
-
     color, dot_class, conf_label = get_confidence(
         clinvar["review_status"], clinvar["clinical_significance"]
     )
@@ -463,7 +531,6 @@ def render_output(clinvar, omim, sections):
     family_line = "This variant may be relevant for blood relatives — consider informing family members."
     card_border = f"card-{color}"
 
-    # ── Tabs for three audiences ───────────────────────────
     tab1, tab2, tab3 = st.tabs([
         "🧑 For the Patient",
         "🩺 For the GP",
@@ -479,7 +546,6 @@ def render_output(clinvar, omim, sections):
             <div class="family-line">👨‍👩‍👧 {family_line}</div>
         </div>
         """, unsafe_allow_html=True)
-        st.code(sections['patient'], language=None)
 
     with tab2:
         st.markdown(f"""
@@ -489,7 +555,6 @@ def render_output(clinvar, omim, sections):
             <div class="card-body">{sections['gp']}</div>
         </div>
         """, unsafe_allow_html=True)
-        st.code(sections['gp'], language=None)
 
     with tab3:
         st.markdown(f"""
@@ -499,7 +564,6 @@ def render_output(clinvar, omim, sections):
             <div class="card-body">{sections['counsellor']}</div>
         </div>
         """, unsafe_allow_html=True)
-        st.code(sections['counsellor'], language=None)
 
     st.markdown('''
     <div class="footer-info">
@@ -517,7 +581,7 @@ st.markdown('''
 <hr class="hero-divider">
 ''', unsafe_allow_html=True)
 
-# ── Condition data ─────────────────────────────────────────
+# ── Common variants dropdown ───────────────────────────────
 common_variants = {
     "Select a condition...": "",
     "Breast/Ovarian Cancer (BRCA1)": "BRCA1 c.5266dupC",
@@ -532,35 +596,6 @@ common_variants = {
     "Tay-Sachs Disease": "HEXA c.1274_1277dupTATC",
 }
 
-more_conditions = {
-    "Cancer Risk": {
-        "BRCA1 c.5266dupC": "BRCA1 c.5266dupC",
-        "BRCA2 c.5946delT": "BRCA2 c.5946delT",
-        "MLH1 Lynch Syndrome": "MLH1 c.1852_1853delAAinsGC",
-        "TP53 Li-Fraumeni": "TP53 c.817C>T",
-    },
-    "Cardiac": {
-        "MYBPC3 Cardiomyopathy": "MYBPC3 c.2905+1G>A",
-        "SCN5A Brugada": "SCN5A c.4900G>A",
-        "LDLR FH": "LDLR c.1646G>A",
-    },
-    "Neurological": {
-        "Huntington's Disease": "HTT c.54GCA",
-        "Parkinson's LRRK2": "LRRK2 c.6055G>A",
-        "Fragile X": "FMR1 c.1A>G",
-    },
-    "Metabolic": {
-        "Cystic Fibrosis": "CFTR c.1521_1523delCTT",
-        "Sickle Cell": "HBB c.20A>T",
-        "Tay-Sachs": "HEXA c.1274_1277dupTATC",
-    },
-    "Other": {
-        "Marfan Syndrome": "FBN1 c.1453C>T",
-        "PTEN Hamartoma": "PTEN c.388C>T",
-    },
-}
-
-# ── Dropdown + toggle ──────────────────────────────────────
 drop_col, more_col, spacer = st.columns([3, 1, 2])
 
 with drop_col:
@@ -571,7 +606,7 @@ with drop_col:
 with more_col:
     st.markdown("<div style='margin-top:1.85rem'></div>", unsafe_allow_html=True)
     toggle_label = "✕ Close" if st.session_state.show_more else "More conditions →"
-    st.markdown('<div class="more-btn">', unsafe_allow_html=True)
+    st.markdown('<div class="more-toggle">', unsafe_allow_html=True)
     if st.button(toggle_label, key="toggle_more"):
         st.session_state.show_more = not st.session_state.show_more
         st.session_state.active_category = None
@@ -580,17 +615,23 @@ with more_col:
 
 # ── More conditions panel ──────────────────────────────────
 if st.session_state.show_more:
-    st.markdown("<div style='margin-top:0.6rem'></div>", unsafe_allow_html=True)
+
+    # Dim overlay when a category is open
+    if st.session_state.active_category:
+        st.markdown('<div class="dim-overlay"></div>', unsafe_allow_html=True)
+
+    # Dark pill row
+    st.markdown('<div class="more-panel">', unsafe_allow_html=True)
     categories = list(more_conditions.keys())
-    cat_cols = st.columns(len(categories))
+    pill_cols = st.columns(len(categories))
 
     for i, category in enumerate(categories):
-        with cat_cols[i]:
+        with pill_cols[i]:
             is_active = st.session_state.active_category == category
-            btn_class = "cat-btn-active" if is_active else "cat-btn"
-            btn_label = f"▾ {category}" if is_active else f"▸ {category}"
-            st.markdown(f'<div class="{btn_class}">', unsafe_allow_html=True)
-            if st.button(btn_label, key=f"cat_{category}"):
+            pill_class = "pill-btn-active" if is_active else "pill-btn"
+            pill_label = f"▾ {category}" if is_active else f"▸ {category}"
+            st.markdown(f'<div class="{pill_class}">', unsafe_allow_html=True)
+            if st.button(pill_label, key=f"pill_{category}"):
                 if st.session_state.active_category == category:
                     st.session_state.active_category = None
                 else:
@@ -598,36 +639,37 @@ if st.session_state.show_more:
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
-    # Show conditions ONLY for active category, directly below it
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Floating dropdown — aligned under active pill
     if st.session_state.active_category:
         active_idx = categories.index(st.session_state.active_category)
         active_items = more_conditions[st.session_state.active_category]
 
-        # Align the dropdown under the correct category column
-        spacer_left = active_idx
-        spacer_right = len(categories) - active_idx - 1
-        cols = []
-        if spacer_left > 0:
-            cols += st.columns([spacer_left, 1, spacer_right]) if spacer_right > 0 else st.columns([spacer_left, 1])
-            panel_col = cols[1]
-        elif spacer_right > 0:
-            cols = st.columns([1, spacer_right])
-            panel_col = cols[0]
+        # Build column layout to align dropdown under pill
+        n = len(categories)
+        if active_idx == 0:
+            layout = [1] + [0.01] * (n - 1)
+        elif active_idx == n - 1:
+            layout = [0.01] * (n - 1) + [1]
         else:
-            panel_col = st
+            layout = [0.01] * active_idx + [1] + [0.01] * (n - active_idx - 1)
 
-        with panel_col:
-            st.markdown('<div class="cat-panel">', unsafe_allow_html=True)
-            st.markdown(f'<div class="cat-panel-label">{st.session_state.active_category}</div>', unsafe_allow_html=True)
+        dropdown_cols = st.columns(layout)
+        with dropdown_cols[active_idx]:
+            st.markdown(f'''
+            <div class="floating-dropdown">
+                <div class="dropdown-category-label">{st.session_state.active_category}</div>
+            </div>
+            ''', unsafe_allow_html=True)
             for label, variant in active_items.items():
-                st.markdown('<div class="condition-btn">', unsafe_allow_html=True)
+                st.markdown('<div class="cond-item">', unsafe_allow_html=True)
                 if st.button(label, key=f"cond_{variant}"):
                     st.session_state.selected_variant = variant
                     st.session_state.show_more = False
                     st.session_state.active_category = None
                     st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Text input ─────────────────────────────────────────────
 variant_input = st.text_input(
