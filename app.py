@@ -28,6 +28,16 @@ html, body, [class*="css"] {
     max-width: 100%;
 }
 
+@media (max-width: 768px) {
+    .block-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        padding-top: 1.5rem !important;
+    }
+    .hero-title { font-size: 2.2rem !important; }
+    .hero-line1, .hero-line2 { font-size: 0.9rem !important; }
+}
+
 .hero-wrap { text-align: center; margin-bottom: 1rem; }
 .hero-title {
     font-size: 3.8rem;
@@ -59,6 +69,107 @@ html, body, [class*="css"] {
     margin: 1.2rem 0;
 }
 
+/* Disclaimer modal */
+.disclaimer-box {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 520px;
+    margin: 4rem auto;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    text-align: center;
+}
+.disclaimer-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 0.8rem;
+}
+.disclaimer-text {
+    font-size: 0.9rem;
+    color: #64748B;
+    line-height: 1.7;
+    margin-bottom: 1.4rem;
+}
+
+/* Severity summary */
+.severity-summary {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+    color: #1e293b;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* Gene info card */
+.gene-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.gene-card-title {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #94A3B8;
+    margin-bottom: 0.6rem;
+}
+.gene-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.85rem;
+    color: #334155;
+}
+.gene-card-item-label {
+    font-weight: 600;
+    color: #64748B;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Citation line */
+.citation-line {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    margin-top: 0.8rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid #F1F5F9;
+}
+
+/* Recent searches */
+.recent-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94A3B8;
+    margin-bottom: 0.4rem;
+}
+.recent-chip {
+    display: inline-block;
+    background: #F1F5F9;
+    color: #334155;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.78rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.4rem;
+    cursor: pointer;
+    border: 1px solid #E2E8F0;
+}
+.recent-chip:hover { background: #E2E8F0; }
+
 .badge-done {
     display: inline-block;
     background: #16a34a;
@@ -74,13 +185,19 @@ html, body, [class*="css"] {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.6rem;
     font-size: 0.85rem;
     color: #64748B;
 }
 .dot-green { width:9px; height:9px; border-radius:50%; background:#16a34a; display:inline-block; }
 .dot-amber { width:9px; height:9px; border-radius:50%; background:#d97706; display:inline-block; }
 .dot-red   { width:9px; height:9px; border-radius:50%; background:#dc2626; display:inline-block; }
+.confidence-tooltip {
+    font-size: 0.72rem;
+    color: #94A3B8;
+    margin-bottom: 1.2rem;
+    padding-left: 1.1rem;
+}
 
 .card {
     background: #FFFFFF;
@@ -143,6 +260,22 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #94A3B8;
+}
+.empty-state-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+.empty-state-text { font-size: 0.95rem; line-height: 1.6; }
+
+/* Progress */
+.progress-label {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin-bottom: 0.4rem;
+}
+
 /* More conditions box */
 .more-box {
     background: #FFFFFF;
@@ -177,7 +310,6 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
-/* Category buttons */
 .cat-btn > div > button {
     background: transparent !important;
     color: #1e293b !important;
@@ -207,7 +339,6 @@ html, body, [class*="css"] {
     box-shadow: none !important;
 }
 
-/* More toggle */
 .more-toggle > div > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -272,7 +403,7 @@ html, body, [class*="css"] {
     margin-top: 2.5rem;
     padding-top: 1.2rem;
     border-top: 1px solid #E2E8F0;
-    line-height: 1.6;
+    line-height: 1.8;
 }
 
 #MainMenu {visibility: hidden;}
@@ -286,12 +417,19 @@ ANTHROPIC_KEY = st.secrets["ANTHROPIC_KEY"]
 OMIM_KEY = st.secrets["OMIM_KEY"]
 
 # ── Session state ──────────────────────────────────────────
-if "show_more" not in st.session_state:
-    st.session_state.show_more = False
-if "active_category" not in st.session_state:
-    st.session_state.active_category = None
-if "selected_variant" not in st.session_state:
-    st.session_state.selected_variant = ""
+defaults = {
+    "show_more": False,
+    "active_category": None,
+    "selected_variant": "",
+    "disclaimer_accepted": False,
+    "search_history": [],
+    "last_search_time": 0,
+    "search_count": 0,
+    "results": None,
+}
+for k, v in defaults.items():
+    if k not in st.session_state:
+        st.session_state[k] = v
 
 # ── Data ───────────────────────────────────────────────────
 common_variants = {
@@ -346,14 +484,36 @@ def clean_text(text):
     text = text.replace("---", "").replace("**", "").replace("--", "").strip()
     return text
 
+def sanitise_input(text):
+    text = text.strip()
+    text = text[:200]
+    text = re.sub(r'[<>{};`]', '', text)
+    return text
+
+def looks_valid(text):
+    if len(text) < 2:
+        return False
+    has_gene = bool(re.search(r'[A-Z]{2,}', text))
+    has_variant = any(c in text for c in ["c.", "p.", "rs", "del", "dup", "ins", ">"])
+    has_disease_words = len(text.split()) >= 2
+    return has_gene or has_variant or has_disease_words
+
 def search_clinvar(query):
     params = {"db":"clinvar","term":query,"retmode":"json","retmax":5}
-    r = requests.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi", params=params)
+    r = requests.get(
+        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+        params=params, timeout=10
+    )
+    r.raise_for_status()
     return r.json()["esearchresult"]["idlist"]
 
 def fetch_clinvar_record(uid):
     params = {"db":"clinvar","id":uid,"rettype":"vcv","retmode":"xml","from_esearch":"true"}
-    r = requests.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi", params=params)
+    r = requests.get(
+        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
+        params=params, timeout=10
+    )
+    r.raise_for_status()
     root = ET.fromstring(r.content)
     def txt(path):
         el = root.find(path)
@@ -371,9 +531,11 @@ def fetch_clinvar_record(uid):
             if val.lower() not in ("not provided","not specified") and val not in seen:
                 seen.add(val)
                 conditions.append(val)
+    accession = va.attrib.get("Accession","N/A") if va is not None else "N/A"
     return {
         "variant_name": variant_name,
         "gene": gene,
+        "accession": accession,
         "clinical_significance": txt(".//GermlineClassification/Description"),
         "review_status": txt(".//ReviewStatus"),
         "variant_type": txt(".//VariantType"),
@@ -382,38 +544,43 @@ def fetch_clinvar_record(uid):
     }
 
 def get_omim_summary(gene_symbol):
-    params = {"search":gene_symbol,"format":"json","apiKey":OMIM_KEY,"limit":1,"include":"geneMap"}
-    r = requests.get("https://api.omim.org/api/entry/search", params=params)
-    entries = r.json().get("omim",{}).get("searchResponse",{}).get("entryList",[])
-    if not entries:
-        return {"gene_symbol":gene_symbol,"gene_name":"Not found","diseases":["Not found"],"inheritance":"Not found"}
-    entry = entries[0]["entry"]
-    gene_map = entry.get("geneMap",{})
-    phenotype_list = gene_map.get("phenotypeMapList",[])
-    diseases = []
-    inheritance_set = set()
-    for item in phenotype_list:
-        p = item.get("phenotypeMap",{})
-        d = p.get("phenotype","")
-        d = d.replace("{","").replace("}","").strip()
-        inh = p.get("phenotypeInheritance","")
-        if d and "?" not in d:
-            diseases.append(d)
-        if inh:
-            inheritance_set.add(inh)
-    return {
-        "gene_symbol": gene_symbol,
-        "gene_name": gene_map.get("geneName","Not found"),
-        "diseases": diseases[:3] if diseases else ["Not found"],
-        "inheritance": ", ".join(inheritance_set) if inheritance_set else "Not found",
-    }
+    try:
+        params = {"search":gene_symbol,"format":"json","apiKey":OMIM_KEY,"limit":1,"include":"geneMap"}
+        r = requests.get("https://api.omim.org/api/entry/search", params=params, timeout=10)
+        r.raise_for_status()
+        entries = r.json().get("omim",{}).get("searchResponse",{}).get("entryList",[])
+        if not entries:
+            return {"gene_symbol":gene_symbol,"gene_name":"Not found","diseases":["Not found"],"inheritance":"Not found","mim_number":"N/A"}
+        entry = entries[0]["entry"]
+        gene_map = entry.get("geneMap",{})
+        phenotype_list = gene_map.get("phenotypeMapList",[])
+        diseases = []
+        inheritance_set = set()
+        for item in phenotype_list:
+            p = item.get("phenotypeMap",{})
+            d = p.get("phenotype","")
+            d = d.replace("{","").replace("}","").strip()
+            inh = p.get("phenotypeInheritance","")
+            if d and "?" not in d:
+                diseases.append(d)
+            if inh:
+                inheritance_set.add(inh)
+        return {
+            "gene_symbol": gene_symbol,
+            "gene_name": gene_map.get("geneName","Not found"),
+            "diseases": diseases[:3] if diseases else ["Not found"],
+            "inheritance": ", ".join(inheritance_set) if inheritance_set else "Not found",
+            "mim_number": entry.get("mimNumber","N/A"),
+        }
+    except Exception:
+        return {"gene_symbol":gene_symbol,"gene_name":"Unavailable","diseases":["OMIM data unavailable"],"inheritance":"Not found","mim_number":"N/A"}
 
 def explain_variant(clinvar, omim):
     client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
     msg = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=1200,
-        messages=[{"role":"user","content":f"""You are a genetics expert. Write three plain-English explanations. Use plain sentences only — no markdown, no bullet points, no headers, no bold, no dashes.
+        max_tokens=1400,
+        messages=[{"role":"user","content":f"""You are a genetics expert writing for a US clinical audience. Write four things. Use plain sentences only — no markdown, no bullet points, no headers, no bold, no dashes.
 
 CLINVAR DATA:
 - Variant: {clinvar['variant_name']}
@@ -428,34 +595,40 @@ OMIM DATA:
 - Diseases: {', '.join(omim['diseases'])}
 - Inheritance: {omim['inheritance']}
 
-Write exactly three sections with these exact headers on their own line:
+Write exactly four sections with these exact headers on their own line:
+
+SEVERITY SUMMARY:
+One plain sentence giving the bottom-line clinical significance in plain English. No jargon.
 
 PATIENT EXPLANATION:
-2-3 plain sentences. No jargon.
+2-3 plain sentences. No jargon. What this means for their health.
 End with exactly: Note: This is not medical advice.
 
-GP EXPLANATION:
-3-4 plain sentences. Clinical context, inheritance, recommended action.
+PRIMARY CARE DOCTOR EXPLANATION:
+3-4 plain sentences. Clinical context, inheritance pattern, recommended action for a US primary care physician.
 End with exactly: Note: This is not medical advice.
 
 GENETIC COUNSELLOR EXPLANATION:
-4-5 plain sentences. Classification, evidence, mechanism, family implications.
+4-5 plain sentences. Variant classification, evidence strength, molecular mechanism, family implications.
 End with exactly: Note: This is not medical advice."""}]
     )
     return msg.content[0].text
 
 def parse_explanations(text):
-    sections = {"patient": "", "gp": "", "counsellor": ""}
+    sections = {"severity": "", "patient": "", "pcd": "", "counsellor": ""}
     current = None
     buffer = []
     for line in text.split("\n"):
         l = line.strip()
-        if "PATIENT EXPLANATION" in l.upper():
-            current = "patient"; buffer = []
-        elif "GP EXPLANATION" in l.upper():
+        if "SEVERITY SUMMARY" in l.upper():
+            current = "severity"; buffer = []
+        elif "PATIENT EXPLANATION" in l.upper():
             if current: sections[current] = clean_text(" ".join(buffer))
-            current = "gp"; buffer = []
-        elif "GENETIC COUNSELLOR EXPLANATION" in l.upper():
+            current = "patient"; buffer = []
+        elif "PRIMARY CARE" in l.upper():
+            if current: sections[current] = clean_text(" ".join(buffer))
+            current = "pcd"; buffer = []
+        elif "GENETIC COUNSELLOR" in l.upper():
             if current: sections[current] = clean_text(" ".join(buffer))
             current = "counsellor"; buffer = []
         elif current and l:
@@ -468,21 +641,50 @@ def get_confidence(review_status, significance):
     rs = review_status.lower()
     sig = significance.lower()
     if "expert panel" in rs or "practice guideline" in rs:
-        return "green", "dot-green", "Pathogenic — reviewed by expert panel"
+        return "green", "dot-green", "Pathogenic — reviewed by expert panel", "This variant has been reviewed and confirmed by a panel of genetics experts — the highest level of evidence available."
     elif "pathogenic" in sig and "conflicting" not in sig:
-        return "amber", "dot-amber", "Pathogenic — limited review"
+        return "amber", "dot-amber", "Pathogenic — limited review", "This variant is classified as disease-causing but has limited expert review. Classification may change as more evidence accumulates."
     else:
-        return "red", "dot-red", "Uncertain or conflicting evidence"
+        return "red", "dot-red", "Uncertain or conflicting evidence", "There is not yet enough evidence to confirm whether this variant causes disease. This is common for newly discovered variants."
+
+def add_to_history(variant):
+    history = st.session_state.search_history
+    if variant not in history:
+        history.insert(0, variant)
+        st.session_state.search_history = history[:5]
 
 def render_output(clinvar, omim, sections):
     st.markdown('<span class="badge-done">Done</span>', unsafe_allow_html=True)
-    color, dot_class, conf_label = get_confidence(
+
+    color, dot_class, conf_label, conf_tooltip = get_confidence(
         clinvar["review_status"], clinvar["clinical_significance"]
     )
+
+    # Severity summary
+    if sections.get("severity"):
+        st.markdown(f'<div class="severity-summary">🔍 <strong>Bottom line:</strong> {sections["severity"]}</div>', unsafe_allow_html=True)
+
+    # Confidence badge + tooltip
     st.markdown(f'''
     <div class="confidence-row">
         <span class="{dot_class}"></span>
         <span>{conf_label}</span>
+    </div>
+    <div class="confidence-tooltip">ⓘ {conf_tooltip}</div>
+    ''', unsafe_allow_html=True)
+
+    # Gene info card
+    st.markdown(f'''
+    <div class="gene-card">
+        <div class="gene-card-title">🧬 Gene Information</div>
+        <div class="gene-card-grid">
+            <div><div class="gene-card-item-label">Gene</div>{clinvar["gene"]}</div>
+            <div><div class="gene-card-item-label">Gene name</div>{omim["gene_name"]}</div>
+            <div><div class="gene-card-item-label">Inheritance</div>{omim["inheritance"]}</div>
+            <div><div class="gene-card-item-label">Variant type</div>{clinvar["variant_type"]}</div>
+            <div><div class="gene-card-item-label">Submissions</div>{clinvar["submission_count"]} ClinVar records</div>
+            <div><div class="gene-card-item-label">OMIM</div>{omim["mim_number"]}</div>
+        </div>
     </div>
     ''', unsafe_allow_html=True)
 
@@ -493,29 +695,46 @@ def render_output(clinvar, omim, sections):
 
     family_line = "This variant may be relevant for blood relatives — consider informing family members."
     card_border = f"card-{color}"
+    disclaimer = "Note: This is not medical advice."
 
     tab1, tab2, tab3 = st.tabs([
         "🧑 For the Patient",
-        "🩺 For the GP",
+        "🩺 For the Primary Care Doctor",
         "🔬 For the Genetic Counsellor"
     ])
+
+    patient_text = sections['patient']
+    if disclaimer.lower() not in patient_text.lower():
+        patient_text += f" {disclaimer}"
+
+    pcd_text = sections['pcd']
+    if disclaimer.lower() not in pcd_text.lower():
+        pcd_text += f" {disclaimer}"
+
+    counsellor_text = sections['counsellor']
+    if disclaimer.lower() not in counsellor_text.lower():
+        counsellor_text += f" {disclaimer}"
+
+    citation = f"Sources: ClinVar {clinvar['accession']} · OMIM {omim['mim_number']} · {clinvar['submission_count']} submissions"
 
     with tab1:
         st.markdown(f"""
         <div class="card {card_border}">
             <div class="card-role">🧑 Patient</div>
             <div class="card-title">For the Patient</div>
-            <div class="card-body">{sections['patient']}</div>
+            <div class="card-body">{patient_text}</div>
             <div class="family-line">👨‍👩‍👧 {family_line}</div>
+            <div class="citation-line">{citation}</div>
         </div>
         """, unsafe_allow_html=True)
 
     with tab2:
         st.markdown(f"""
         <div class="card {card_border}">
-            <div class="card-role">🩺 Clinician</div>
-            <div class="card-title">For the GP</div>
-            <div class="card-body">{sections['gp']}</div>
+            <div class="card-role">🩺 Primary Care</div>
+            <div class="card-title">For the Primary Care Doctor</div>
+            <div class="card-body">{pcd_text}</div>
+            <div class="citation-line">{citation}</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -524,25 +743,58 @@ def render_output(clinvar, omim, sections):
         <div class="card {card_border}">
             <div class="card-role">🔬 Specialist</div>
             <div class="card-title">For the Genetic Counsellor</div>
-            <div class="card-body">{sections['counsellor']}</div>
+            <div class="card-body">{counsellor_text}</div>
+            <div class="citation-line">{citation}</div>
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown('''
+    st.markdown(f'''
     <div class="footer-info">
-        ⓘ Data sourced from ClinVar (NCBI) and OMIM. For educational purposes only — always consult a qualified healthcare professional.
+        ⓘ Data sourced from ClinVar (NCBI) and OMIM. For educational purposes only — always consult a qualified healthcare professional.<br>
+        This tool covers variants with ClinVar records (~7,000+ rare diseases). It may not support newly discovered or ultra-rare variants not yet submitted to clinical databases.<br>
+        Session searches: {st.session_state.search_count}
     </div>
     ''', unsafe_allow_html=True)
+
+# ── Disclaimer modal ───────────────────────────────────────
+if not st.session_state.disclaimer_accepted:
+    st.markdown('''
+    <div class="disclaimer-box">
+        <div class="disclaimer-title">⚕️ Before you continue</div>
+        <div class="disclaimer-text">
+            This tool is for <strong>educational purposes only</strong> and does not constitute medical advice.<br><br>
+            Variant interpretations are sourced from ClinVar and OMIM — publicly available clinical databases.
+            Always consult a qualified healthcare professional or genetic counsellor before making any
+            clinical or personal health decisions based on genetic information.
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
+    _, center, _ = st.columns([2, 1, 2])
+    with center:
+        if st.button("I understand — continue"):
+            st.session_state.disclaimer_accepted = True
+            st.rerun()
+    st.stop()
 
 # ── Hero ───────────────────────────────────────────────────
 st.markdown('''
 <div class="hero-wrap">
     <div class="hero-title">Variant Explainer</div>
     <div class="hero-line1">Built for patients, clinicians, and genetic counsellors who need clear answers from complex genetic data.</div>
-    <div class="hero-line2">Paste any genetic variant or disease name and get three tailored plain-English explanations instantly.</div>
+    <div class="hero-line2">Paste any genetic variant or disease name and get plain-English explanations instantly.</div>
 </div>
 <hr class="hero-divider">
 ''', unsafe_allow_html=True)
+
+# ── Recent searches ────────────────────────────────────────
+if st.session_state.search_history:
+    st.markdown('<div class="recent-label">Recent searches</div>', unsafe_allow_html=True)
+    cols = st.columns(len(st.session_state.search_history))
+    for i, prev in enumerate(st.session_state.search_history):
+        with cols[i]:
+            if st.button(prev, key=f"recent_{i}"):
+                st.session_state.selected_variant = prev
+                st.rerun()
 
 # ── Input row ──────────────────────────────────────────────
 drop_col, more_col, spacer = st.columns([3, 1, 2])
@@ -562,7 +814,7 @@ with more_col:
         st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── More conditions — selectbox approach ──────────────────
+# ── More conditions ────────────────────────────────────────
 if st.session_state.show_more:
     box_col, _ = st.columns([1, 3])
     with box_col:
@@ -580,7 +832,6 @@ if st.session_state.show_more:
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
-            # ── Selectbox for conditions ───────────────────
             if is_active:
                 options = ["Select a condition..."] + list(items.keys())
                 choice = st.selectbox(
@@ -597,47 +848,119 @@ if st.session_state.show_more:
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-# ── Text input ─────────────────────────────────────────────
+# ── Text input with keyboard submit ───────────────────────
 variant_input = st.text_input(
     "Or type any variant or disease name:",
     value=st.session_state.selected_variant,
-    placeholder="e.g. BRCA1 c.5266dupC or 'cystic fibrosis'"
+    placeholder="e.g. BRCA1 c.5266dupC or 'Huntington's disease'",
+    key="variant_input_field"
 )
+
+# Keyboard Enter triggers run
+st.markdown("""
+<script>
+const input = window.parent.document.querySelector('input[data-testid="stTextInput"]');
+if (input) {
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const btn = window.parent.document.querySelector('button[kind="primary"]');
+            if (btn) btn.click();
+        }
+    });
+}
+</script>
+""", unsafe_allow_html=True)
 
 run_col, _ = st.columns([2, 5])
 with run_col:
-    run_button = st.button("Explain this variant")
+    run_button = st.button("Explain this variant", type="primary")
+
+# ── Empty state ────────────────────────────────────────────
+if not run_button and not st.session_state.results:
+    st.markdown('''
+    <div class="empty-state">
+        <div class="empty-state-icon">🧬</div>
+        <div class="empty-state-text">
+            Select a condition above or type a variant name.<br>
+            Your explanation will appear here.
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
 
 # ── Run ────────────────────────────────────────────────────
 if run_button:
-    if not variant_input.strip():
+    # Usage cap
+    if st.session_state.search_count >= 10:
+        st.warning("You've run 10 searches this session. Consider bookmarking your results. Refresh the page to continue.")
+        st.stop()
+
+    # Rate limiting
+    now = time.time()
+    if now - st.session_state.last_search_time < 3:
+        st.warning("Please wait a moment before searching again.")
+        st.stop()
+
+    # Input validation
+    clean_input = sanitise_input(variant_input)
+    if not clean_input:
         st.warning("Please enter a variant or disease name.")
-    else:
-        with st.spinner("Looking up variant..."):
-            if is_disease_name(variant_input):
+        st.stop()
+    if not looks_valid(clean_input):
+        st.warning("That doesn't look like a valid variant or disease name. Try something like 'BRCA1 c.5266dupC' or 'Huntington's disease'.")
+        st.stop()
+
+    st.session_state.last_search_time = now
+    st.session_state.search_count += 1
+
+    try:
+        # Step 1
+        st.markdown('<div class="progress-label">Step 1 of 3 — Looking up variant...</div>', unsafe_allow_html=True)
+        with st.spinner(""):
+            if is_disease_name(clean_input):
                 client_temp = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
                 conversion = client_temp.messages.create(
                     model="claude-haiku-4-5-20251001",
                     max_tokens=50,
-                    messages=[{"role":"user","content":f"What is the most common clinically significant ClinVar searchable variant for '{variant_input}'? Reply with ONLY the variant string like 'BRCA1 c.5266dupC'. Nothing else."}]
+                    messages=[{"role":"user","content":f"What is the most common clinically significant ClinVar searchable variant for '{clean_input}'? Reply with ONLY the variant string like 'BRCA1 c.5266dupC'. Nothing else."}]
                 )
-                variant_input = conversion.content[0].text.strip()
-                st.markdown(f'<div class="variant-chip">🔎 Most common variant identified: <strong>{variant_input}</strong></div>', unsafe_allow_html=True)
+                resolved = conversion.content[0].text.strip()
+                st.markdown(f'<div class="variant-chip">🔎 Found: <strong>{clean_input}</strong> → <strong>{resolved}</strong> (most common variant)</div>', unsafe_allow_html=True)
+                clean_input = resolved
+            time.sleep(0.3)
 
-        with st.spinner("Fetching ClinVar data..."):
-            uids = search_clinvar(variant_input)
+        # Step 2
+        st.markdown('<div class="progress-label">Step 2 of 3 — Fetching clinical data...</div>', unsafe_allow_html=True)
+        with st.spinner(""):
+            uids = search_clinvar(clean_input)
             if not uids:
-                st.error("No ClinVar record found. Try a different variant.")
+                st.error("We couldn't find this variant in ClinVar. Try checking the spelling or use a different format — e.g. 'BRCA1 c.5266dupC' or try a disease name like 'Huntington's disease'.")
                 st.stop()
             time.sleep(0.4)
             clinvar = fetch_clinvar_record(uids[0])
-
-        with st.spinner("Fetching OMIM data..."):
             omim = get_omim_summary(clinvar["gene"])
 
-        with st.spinner("Generating explanations..."):
+        # Step 3
+        st.markdown('<div class="progress-label">Step 3 of 3 — Generating explanations...</div>', unsafe_allow_html=True)
+        with st.spinner(""):
             explanation = explain_variant(clinvar, omim)
             sections = parse_explanations(explanation)
 
+        # Update browser title
+        st.markdown(f"<script>window.parent.document.title = '{clinvar['gene']} — Variant Explainer';</script>", unsafe_allow_html=True)
+
+        add_to_history(clean_input)
+        st.session_state.results = {"clinvar": clinvar, "omim": omim, "sections": sections}
         st.markdown('<hr class="hero-divider">', unsafe_allow_html=True)
         render_output(clinvar, omim, sections)
+
+    except requests.exceptions.Timeout:
+        st.error("The request timed out. The clinical databases may be slow — please try again in a moment.")
+    except requests.exceptions.ConnectionError:
+        st.error("Connection error. Please check your internet connection and try again.")
+    except Exception as e:
+        st.error("Something went wrong while fetching data. Please try a different variant or try again shortly.")
+
+elif st.session_state.results and not run_button:
+    r = st.session_state.results
+    st.markdown('<hr class="hero-divider">', unsafe_allow_html=True)
+    render_output(r["clinvar"], r["omim"], r["sections"])
