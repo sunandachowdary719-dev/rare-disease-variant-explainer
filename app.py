@@ -83,11 +83,7 @@ html, body, [class*="css"] {
     border-radius: 14px;
     padding: 1.4rem 1.5rem 1.4rem 1.5rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    height: auto;
-    min-height: 0;
     overflow: visible;
-    display: flex;
-    flex-direction: column;
     margin-bottom: 1rem;
 }
 .card-green { border-left: 3px solid #16a34a; }
@@ -113,7 +109,6 @@ html, body, [class*="css"] {
     line-height: 1.75;
     color: #334155;
     font-weight: 400;
-    flex: 1;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
@@ -127,18 +122,6 @@ html, body, [class*="css"] {
     border-top: 1px solid #F1F5F9;
     word-wrap: break-word;
 }
-
-.section-label {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.7rem;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 1rem;
-}
-.label-example { background: #f0fdf4; color: #16a34a; }
 
 .variant-chip {
     background: #eff6ff;
@@ -184,6 +167,36 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
+.cat-btn > div > button {
+    background: #F1F5F9 !important;
+    color: #334155 !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    padding: 0.35rem 1rem !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    width: auto !important;
+}
+.cat-btn > div > button:hover {
+    background: #E2E8F0 !important;
+    opacity: 1 !important;
+}
+.condition-btn > div > button {
+    background: #FFFFFF !important;
+    color: #2563eb !important;
+    border: 1px solid #BFDBFE !important;
+    border-radius: 8px !important;
+    padding: 0.3rem 0.9rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 400 !important;
+    width: auto !important;
+    margin-bottom: 0.3rem !important;
+}
+.condition-btn > div > button:hover {
+    background: #EFF6FF !important;
+    opacity: 1 !important;
+}
+
 .footer-info {
     font-size: 0.76rem;
     color: #94A3B8;
@@ -200,9 +213,19 @@ header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
+# ── Keys ───────────────────────────────────────────────────
 ANTHROPIC_KEY = st.secrets["ANTHROPIC_KEY"]
 OMIM_KEY = st.secrets["OMIM_KEY"]
 
+# ── Session state init ─────────────────────────────────────
+if "show_more" not in st.session_state:
+    st.session_state.show_more = False
+if "active_category" not in st.session_state:
+    st.session_state.active_category = None
+if "selected_variant" not in st.session_state:
+    st.session_state.selected_variant = ""
+
+# ── Helpers ────────────────────────────────────────────────
 def is_disease_name(text):
     return not any(c in text for c in ["c.", "p.", "rs", "del", "dup", "ins", ">"])
 
@@ -339,11 +362,8 @@ def get_confidence(review_status, significance):
     else:
         return "red", "dot-red", "Uncertain or conflicting evidence"
 
-def render_output(clinvar, omim, sections, is_example=False):
-    if is_example:
-        st.markdown('<span class="section-label label-example">Example output — BRCA1 c.5266dupC</span>', unsafe_allow_html=True)
-    else:
-        st.markdown('<span class="badge-done">Done</span>', unsafe_allow_html=True)
+def render_output(clinvar, omim, sections):
+    st.markdown('<span class="badge-done">Done</span>', unsafe_allow_html=True)
 
     color, dot_class, conf_label = get_confidence(
         clinvar["review_status"], clinvar["clinical_significance"]
@@ -363,8 +383,9 @@ def render_output(clinvar, omim, sections, is_example=False):
     family_line = "This variant may be relevant for blood relatives — consider informing family members."
     card_border = f"card-{color}"
 
-    c1, c2, c3 = st.columns(3)
-    with c1:
+    # Top row — Patient + GP side by side
+    top_left, top_right = st.columns(2)
+    with top_left:
         st.markdown(f"""
         <div class="card {card_border}">
             <div class="card-role">🧑 Patient</div>
@@ -375,7 +396,7 @@ def render_output(clinvar, omim, sections, is_example=False):
         """, unsafe_allow_html=True)
         st.code(sections['patient'], language=None)
 
-    with c2:
+    with top_right:
         st.markdown(f"""
         <div class="card {card_border}">
             <div class="card-role">🩺 Clinician</div>
@@ -385,7 +406,9 @@ def render_output(clinvar, omim, sections, is_example=False):
         """, unsafe_allow_html=True)
         st.code(sections['gp'], language=None)
 
-    with c3:
+    # Bottom row — Genetic Counsellor centered
+    _, bottom_mid, _ = st.columns([1, 2, 1])
+    with bottom_mid:
         st.markdown(f"""
         <div class="card {card_border}">
             <div class="card-role">🔬 Specialist</div>
@@ -414,7 +437,7 @@ st.markdown('''
 <hr class="hero-divider">
 ''', unsafe_allow_html=True)
 
-# ── Input ──────────────────────────────────────────────────
+# ── Condition data ─────────────────────────────────────────
 common_variants = {
     "Select a condition...": "",
     "Breast/Ovarian Cancer (BRCA1)": "BRCA1 c.5266dupC",
@@ -433,17 +456,17 @@ more_conditions = {
     "Cancer Risk": {
         "BRCA1 c.5266dupC": "BRCA1 c.5266dupC",
         "BRCA2 c.5946delT": "BRCA2 c.5946delT",
-        "MLH1 c.1852_1853delAAinsGC": "MLH1 c.1852_1853delAAinsGC",
-        "TP53 c.817C>T": "TP53 c.817C>T",
+        "MLH1 Lynch Syndrome": "MLH1 c.1852_1853delAAinsGC",
+        "TP53 Li-Fraumeni": "TP53 c.817C>T",
     },
     "Cardiac": {
-        "MYBPC3 c.2905+1G>A": "MYBPC3 c.2905+1G>A",
-        "SCN5A c.4900G>A": "SCN5A c.4900G>A",
-        "LDLR c.1646G>A": "LDLR c.1646G>A",
+        "MYBPC3 Cardiomyopathy": "MYBPC3 c.2905+1G>A",
+        "SCN5A Brugada": "SCN5A c.4900G>A",
+        "LDLR FH": "LDLR c.1646G>A",
     },
     "Neurological": {
         "Huntington's Disease": "HTT c.54GCA",
-        "Parkinson's (LRRK2)": "LRRK2 c.6055G>A",
+        "Parkinson's LRRK2": "LRRK2 c.6055G>A",
         "Fragile X": "FMR1 c.1A>G",
     },
     "Metabolic": {
@@ -457,25 +480,61 @@ more_conditions = {
     },
 }
 
+# ── Dropdown + More conditions toggle ─────────────────────
 drop_col, more_col, spacer = st.columns([3, 1, 2])
 
 with drop_col:
     selected = st.selectbox("Quick select a condition:", list(common_variants.keys()))
-    default_variant = common_variants[selected]
+    if common_variants[selected]:
+        st.session_state.selected_variant = common_variants[selected]
 
 with more_col:
     st.markdown("<div style='margin-top:1.85rem'></div>", unsafe_allow_html=True)
-    show_more = st.button("More conditions →")
+    toggle_label = "✕ Close" if st.session_state.show_more else "More conditions →"
+    if st.button(toggle_label):
+        st.session_state.show_more = not st.session_state.show_more
+        st.session_state.active_category = None
+        st.rerun()
 
-if show_more:
-    for category, items in more_conditions.items():
-        st.markdown(f"**{category}**")
-        for label, variant in items.items():
-            st.code(f"{label}: {variant}")
+# ── More conditions panel ──────────────────────────────────
+if st.session_state.show_more:
+    st.markdown("<div style='margin-top:0.8rem'></div>", unsafe_allow_html=True)
 
+    # Category buttons in a row
+    cat_cols = st.columns(len(more_conditions))
+    for i, category in enumerate(more_conditions.keys()):
+        with cat_cols[i]:
+            is_active = st.session_state.active_category == category
+            btn_label = f"▾ {category}" if is_active else category
+            st.markdown('<div class="cat-btn">', unsafe_allow_html=True)
+            if st.button(btn_label, key=f"cat_{category}"):
+                if st.session_state.active_category == category:
+                    st.session_state.active_category = None
+                else:
+                    st.session_state.active_category = category
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+
+    # Show conditions for active category
+    if st.session_state.active_category:
+        st.markdown("<div style='margin-top:0.6rem; padding: 0.8rem 0;'>", unsafe_allow_html=True)
+        items = more_conditions[st.session_state.active_category]
+        cond_cols = st.columns(len(items))
+        for i, (label, variant) in enumerate(items.items()):
+            with cond_cols[i]:
+                st.markdown('<div class="condition-btn">', unsafe_allow_html=True)
+                if st.button(label, key=f"cond_{variant}"):
+                    st.session_state.selected_variant = variant
+                    st.session_state.show_more = False
+                    st.session_state.active_category = None
+                    st.rerun()
+                st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+# ── Text input ─────────────────────────────────────────────
 variant_input = st.text_input(
     "Or type any variant or disease name:",
-    value=default_variant,
+    value=st.session_state.selected_variant,
     placeholder="e.g. BRCA1 c.5266dupC or 'cystic fibrosis'"
 )
 
@@ -483,40 +542,11 @@ run_col, _ = st.columns([2, 5])
 with run_col:
     run_button = st.button("Explain this variant")
 
-# ── Example on first load ──────────────────────────────────
-if "example_shown" not in st.session_state:
-    st.session_state.example_shown = False
-
-if not run_button and not st.session_state.example_shown:
-    st.markdown('<hr class="hero-divider">', unsafe_allow_html=True)
-    example_clinvar = {
-        "variant_name": "NM_007294.4(BRCA1):c.5266dupC (p.Gln1756ProfsTer25)",
-        "gene": "BRCA1",
-        "clinical_significance": "Pathogenic",
-        "review_status": "reviewed by expert panel",
-        "variant_type": "Duplication",
-        "conditions": ["Hereditary breast ovarian cancer syndrome", "Familial cancer of breast"],
-        "submission_count": 94,
-    }
-    example_omim = {
-        "gene_symbol": "BRCA1",
-        "gene_name": "BRCA1 DNA repair-associated protein",
-        "diseases": ["Breast-ovarian cancer, familial 1", "Pancreatic cancer, susceptibility to, 4"],
-        "inheritance": "Autosomal dominant",
-    }
-    example_sections = {
-        "patient": "You have a change in your BRCA1 gene that significantly increases your lifetime risk of breast and ovarian cancer. This change is well-studied and classified as disease-causing by leading genetics experts. Your doctor will discuss screening options and preventive measures with you. Note: This is not medical advice.",
-        "gp": "This patient carries a pathogenic frameshift variant in BRCA1 (c.5266dupC), classified as disease-causing by expert panel review across 94 ClinVar submissions. BRCA1-related cancer predisposition follows autosomal dominant inheritance, meaning first-degree relatives have a 50% chance of carrying the variant. Referral to clinical genetics and discussion of enhanced surveillance or risk-reduction options is recommended. Note: This is not medical advice.",
-        "counsellor": "The variant NM_007294.4(BRCA1):c.5266dupC introduces a frameshift causing premature protein truncation, classified Pathogenic with expert panel review across 94 submissions. Loss of BRCA1 function impairs homologous recombination DNA repair, conferring substantially elevated lifetime risk for breast and ovarian cancer. Inheritance is autosomal dominant; cascade testing of first-degree relatives is indicated. Note: This is not medical advice.",
-    }
-    render_output(example_clinvar, example_omim, example_sections, is_example=True)
-
 # ── Run ────────────────────────────────────────────────────
 if run_button:
     if not variant_input.strip():
         st.warning("Please enter a variant or disease name.")
     else:
-        st.session_state.example_shown = True
         with st.spinner("Looking up variant..."):
             if is_disease_name(variant_input):
                 client_temp = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
