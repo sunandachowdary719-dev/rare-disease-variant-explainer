@@ -4,17 +4,14 @@ import xml.etree.ElementTree as ET
 import anthropic
 import time
 
-# ── Page config must be first ──────────────────────────────
 st.set_page_config(
     page_title="Variant Explainer",
     page_icon="🧬",
     layout="centered"
 )
 
-# ── Custom CSS ─────────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 html, body, [class*="css"] {
@@ -22,15 +19,8 @@ html, body, [class*="css"] {
     background-color: #f5f7fa;
     color: #1a1a2e;
 }
-
-.main {
-    background-color: #f5f7fa;
-}
-
-.block-container {
-    padding-top: 3rem;
-    max-width: 720px;
-}
+.main { background-color: #f5f7fa; }
+.block-container { padding-top: 3rem; max-width: 720px; }
 
 .hero-title {
     font-family: 'Nunito', sans-serif;
@@ -40,7 +30,6 @@ html, body, [class*="css"] {
     margin-bottom: 0.4rem;
     line-height: 1.2;
 }
-
 .hero-subtitle {
     font-size: 1rem;
     color: #64748b;
@@ -48,7 +37,6 @@ html, body, [class*="css"] {
     margin-bottom: 2rem;
     line-height: 1.65;
 }
-
 .section-card {
     background: #ffffff;
     border: 1px solid #e8edf3;
@@ -57,7 +45,6 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
-
 .section-label {
     font-size: 0.68rem;
     font-weight: 600;
@@ -68,21 +55,9 @@ html, body, [class*="css"] {
     border-radius: 20px;
     display: inline-block;
 }
-
-.label-patient {
-    background: #eff6ff;
-    color: #2563eb;
-}
-
-.label-gp {
-    background: #f0fdf4;
-    color: #16a34a;
-}
-
-.label-counsellor {
-    background: #faf5ff;
-    color: #7c3aed;
-}
+.label-patient { background: #eff6ff; color: #2563eb; }
+.label-gp { background: #f0fdf4; color: #16a34a; }
+.label-counsellor { background: #faf5ff; color: #7c3aed; }
 
 .section-text {
     font-size: 0.97rem;
@@ -91,67 +66,35 @@ html, body, [class*="css"] {
     font-weight: 400;
     margin: 0;
 }
-
 .badge-high {
-    background: #f0fdf4;
-    color: #15803d;
+    background: #f0fdf4; color: #15803d;
     border: 1px solid #bbf7d0;
-    padding: 0.45rem 1.1rem;
-    border-radius: 8px;
-    font-size: 0.83rem;
-    font-weight: 500;
-    display: inline-block;
-    margin-bottom: 1.2rem;
+    padding: 0.45rem 1.1rem; border-radius: 8px;
+    font-size: 0.83rem; font-weight: 500;
+    display: inline-block; margin-bottom: 1.2rem;
 }
-
 .badge-mid {
-    background: #fefce8;
-    color: #a16207;
+    background: #fefce8; color: #a16207;
     border: 1px solid #fde68a;
-    padding: 0.45rem 1.1rem;
-    border-radius: 8px;
-    font-size: 0.83rem;
-    font-weight: 500;
-    display: inline-block;
-    margin-bottom: 1.2rem;
+    padding: 0.45rem 1.1rem; border-radius: 8px;
+    font-size: 0.83rem; font-weight: 500;
+    display: inline-block; margin-bottom: 1.2rem;
 }
-
 .badge-low {
-    background: #f8fafc;
-    color: #64748b;
+    background: #f8fafc; color: #64748b;
     border: 1px solid #e2e8f0;
-    padding: 0.45rem 1.1rem;
-    border-radius: 8px;
-    font-size: 0.83rem;
-    font-weight: 500;
-    display: inline-block;
-    margin-bottom: 1.2rem;
+    padding: 0.45rem 1.1rem; border-radius: 8px;
+    font-size: 0.83rem; font-weight: 500;
+    display: inline-block; margin-bottom: 1.2rem;
 }
-
 .variant-found {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    border-radius: 10px;
-    padding: 0.75rem 1.1rem;
-    color: #1d4ed8;
-    font-size: 0.88rem;
-    margin-bottom: 1rem;
+    background: #eff6ff; border: 1px solid #bfdbfe;
+    border-radius: 10px; padding: 0.75rem 1.1rem;
+    color: #1d4ed8; font-size: 0.88rem; margin-bottom: 1rem;
 }
+.divider { border: none; border-top: 1px solid #e8edf3; margin: 1.8rem 0; }
+.footer-text { color: #94a3b8; font-size: 0.76rem; text-align: center; margin-top: 1.5rem; }
 
-.divider {
-    border: none;
-    border-top: 1px solid #e8edf3;
-    margin: 1.8rem 0;
-}
-
-.footer-text {
-    color: #94a3b8;
-    font-size: 0.76rem;
-    text-align: center;
-    margin-top: 1.5rem;
-}
-
-/* Input */
 .stTextInput > div > div > input {
     background-color: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
@@ -162,13 +105,10 @@ html, body, [class*="css"] {
     padding: 0.7rem 1rem !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
 }
-
 .stTextInput > div > div > input:focus {
     border-color: #2563eb !important;
     box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
 }
-
-/* Button */
 .stButton > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -179,32 +119,23 @@ html, body, [class*="css"] {
     font-size: 0.93rem !important;
     font-weight: 500 !important;
     width: 100% !important;
-    transition: background 0.2s !important;
 }
-
-.stButton > button:hover {
-    background: #1e293b !important;
-}
-
-/* Selectbox */
+.stButton > button:hover { background: #1e293b !important; }
 .stSelectbox > div > div {
     background-color: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 10px !important;
     color: #0f172a !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
 }
-
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
-# ── Keys ───────────────────────────────────────────────────
+
 ANTHROPIC_KEY = st.secrets["ANTHROPIC_KEY"]
 OMIM_KEY = st.secrets["OMIM_KEY"]
 
-# ── Functions ──────────────────────────────────────────────
 def is_disease_name(text):
     return not any(c in text for c in ["c.", "p.", "rs", "del", "dup", "ins", ">"])
 
@@ -275,7 +206,7 @@ def explain_variant(clinvar, omim):
     msg = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=1000,
-        messages=[{"role":"user","content":f"""You are a genetics expert. Write three plain-English explanations.
+        messages=[{"role":"user","content":f"""You are a genetics expert. Write three plain-English explanations. Do not use any markdown symbols like ##, **, --, or ---. Write in plain paragraphs only.
 
 CLINVAR DATA:
 - Variant: {clinvar['variant_name']}
@@ -290,26 +221,43 @@ OMIM DATA:
 - Diseases: {', '.join(omim['diseases'])}
 - Inheritance: {omim['inheritance']}
 
-Write exactly three sections:
+Write exactly three sections with these exact headers on their own line:
 
 PATIENT EXPLANATION:
-(2-3 sentences. No jargon. What this means for their health.)
+Write 2-3 sentences. No jargon. What this means for their health.
+End with: Note: This is not medical advice.
 
 GP EXPLANATION:
-(3-4 sentences. Clinical context. Inheritance and recommended action.)
+Write 3-4 sentences. Clinical context. Inheritance and recommended action.
+End with: Note: This is not medical advice.
 
 GENETIC COUNSELLOR EXPLANATION:
-(4-5 sentences. Technical detail. Classification, evidence, family implications.)
-
-End every section with: Note: This is not medical advice."""}]
+Write 4-5 sentences. Technical detail. Classification, evidence, family implications.
+End with: Note: This is not medical advice."""}]
     )
     return msg.content[0].text
 
-# ── Hero ───────────────────────────────────────────────────
+def clean_text(text):
+    import re
+    text = re.sub(r'#{1,6}\s?', '', text)
+    text = text.replace("---", "").replace("**", "").replace("--", "")
+    text = text.strip()
+    return text
+
+def get_badge(review_status, significance):
+    rs = review_status.lower()
+    sig = significance.lower()
+    if "expert panel" in rs or "practice guideline" in rs:
+        return "badge-high", "🟢 High confidence — reviewed by expert panel"
+    elif "pathogenic" in sig:
+        return "badge-mid", "🟡 Moderate confidence — pathogenic, limited review"
+    else:
+        return "badge-low", "⚪ Low confidence — limited evidence"
+
+# ── UI ─────────────────────────────────────────────────────
 st.markdown('<p class="hero-title">🧬 Variant Explainer</p>', unsafe_allow_html=True)
 st.markdown('<p class="hero-subtitle">Paste a genetic variant or disease name.<br>Get plain-English explanations for patients, GPs, and genetic counsellors.</p>', unsafe_allow_html=True)
 
-# ── Input ──────────────────────────────────────────────────
 common_variants = {
     "Select a common disease...": "",
     "Breast/Ovarian Cancer (BRCA1)": "BRCA1 c.5266dupC",
@@ -328,9 +276,7 @@ variant_input = st.text_input(
     placeholder="e.g. BRCA1 c.5266dupC or 'cystic fibrosis'"
 )
 
-st.button_clicked = st.button("🔍 Explain this variant")
-
-if st.button_clicked:
+if st.button("🔍 Explain this variant"):
     if not variant_input.strip():
         st.warning("Please enter a variant or disease name.")
     else:
@@ -359,58 +305,57 @@ if st.button_clicked:
         with st.spinner("Generating explanations..."):
             explanation = explain_variant(clinvar, omim)
 
-        # Badge
-        rs = clinvar["review_status"].lower()
-        sig = clinvar["clinical_significance"].lower()
-        if "expert panel" in rs or "practice guideline" in rs:
-            badge_class = "badge-high"
-            badge_text = "🟢 High confidence — reviewed by expert panel"
-        elif "pathogenic" in sig:
-            badge_class = "badge-mid"
-            badge_text = "🟡 Moderate confidence — pathogenic, limited review"
-        else:
-            badge_class = "badge-low"
-            badge_text = "⚪ Low confidence — limited evidence"
+        st.success("Done!")
 
+        badge_class, badge_text = get_badge(clinvar["review_status"], clinvar["clinical_significance"])
         st.markdown(f'<div class="{badge_class}">{badge_text}</div>', unsafe_allow_html=True)
 
-        # Raw data
         with st.expander("📊 View raw clinical data"):
             st.json({"ClinVar": clinvar, "OMIM": omim})
 
         st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
-        # Parse and display sections
-        sections = explanation.strip().split("\n\n")
         labels = {
-            "PATIENT": ("label-patient", "👤 For the Patient"),
-            "GP": ("label-gp", "🩺 For the GP"),
-            "GENETIC COUNSELLOR": ("label-counsellor", "🔬 For the Genetic Counsellor"),
+            "PATIENT EXPLANATION": ("label-patient", "👤 For the Patient"),
+            "GP EXPLANATION": ("label-gp", "🩺 For the GP"),
+            "GENETIC COUNSELLOR EXPLANATION": ("label-counsellor", "🔬 For the Genetic Counsellor"),
         }
 
-        for section in sections:
-            if not section.strip():
-                continue
-            matched_label = None
-            matched_class = None
+        current_label = None
+        current_class = None
+        current_text = []
+
+        for line in explanation.split("\n"):
+            line_clean = line.strip()
+            matched = False
             for key, (css_class, display) in labels.items():
-                if key in section.upper():
-                    matched_label = display
-                    matched_class = css_class
+                if key in line_clean.upper():
+                    if current_label and current_text:
+                        text = clean_text(" ".join(current_text))
+                        if text:
+                            st.markdown(f"""
+                            <div class="section-card">
+                                <span class="section-label {current_class}">{current_label}</span>
+                                <p class="section-text">{text}</p>
+                            </div>
+                            """, unsafe_allow_html=True)
+                    current_label = display
+                    current_class = css_class
+                    current_text = []
+                    matched = True
                     break
-            text = section.strip()
-            for key in labels:
-                text = text.replace(f"{key} EXPLANATION:", "").replace(f"{key}:", "").strip()
-            if matched_label:
+            if not matched and line_clean and line_clean != "---":
+                current_text.append(line_clean)
+
+        if current_label and current_text:
+            text = clean_text(" ".join(current_text))
+            if text:
                 st.markdown(f"""
                 <div class="section-card">
-                    <span class="section-label {matched_class}">{matched_label}</span>
+                    <span class="section-label {current_class}">{current_label}</span>
                     <p class="section-text">{text}</p>
                 </div>
                 """, unsafe_allow_html=True)
-            else:
-                if text:
-                    st.markdown(f'<p class="section-text">{text}</p>', unsafe_allow_html=True)
 
         st.markdown('<hr class="divider">', unsafe_allow_html=True)
         st.markdown('<p class="footer-text">Data from ClinVar (NCBI) & OMIM · For educational purposes only · Always consult a healthcare professional</p>', unsafe_allow_html=True)
