@@ -40,12 +40,20 @@ html, body, [class*="css"] {
     line-height: 1.1;
     margin-bottom: 0.8rem;
 }
-.hero-desc {
+.hero-line1 {
     font-size: 1rem;
     color: #64748B;
-    line-height: 1.7;
+    line-height: 1.5;
     font-weight: 400;
-    max-width: 560px;
+    max-width: 580px;
+    margin: 0 auto 0.3rem auto;
+}
+.hero-line2 {
+    font-size: 1rem;
+    color: #64748B;
+    line-height: 1.5;
+    font-weight: 400;
+    max-width: 580px;
     margin: 0 auto;
 }
 .hero-divider {
@@ -77,13 +85,17 @@ html, body, [class*="css"] {
 .dot-amber { width:9px; height:9px; border-radius:50%; background:#d97706; display:inline-block; }
 .dot-red   { width:9px; height:9px; border-radius:50%; background:#dc2626; display:inline-block; }
 
+/* FIX 3 — cards expand to fit all content, nothing cut off */
 .card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 14px;
     padding: 1.4rem 1.5rem 1.4rem 1.5rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    overflow: visible;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
     margin-bottom: 1rem;
 }
 .card-green { border-left: 3px solid #16a34a; }
@@ -112,6 +124,9 @@ html, body, [class*="css"] {
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
 }
 .family-line {
     font-size: 0.81rem;
@@ -217,7 +232,7 @@ header {visibility: hidden;}
 ANTHROPIC_KEY = st.secrets["ANTHROPIC_KEY"]
 OMIM_KEY = st.secrets["OMIM_KEY"]
 
-# ── Session state init ─────────────────────────────────────
+# ── Session state ──────────────────────────────────────────
 if "show_more" not in st.session_state:
     st.session_state.show_more = False
 if "active_category" not in st.session_state:
@@ -383,7 +398,6 @@ def render_output(clinvar, omim, sections):
     family_line = "This variant may be relevant for blood relatives — consider informing family members."
     card_border = f"card-{color}"
 
-    # Top row — Patient + GP side by side
     top_left, top_right = st.columns(2)
     with top_left:
         st.markdown(f"""
@@ -406,7 +420,6 @@ def render_output(clinvar, omim, sections):
         """, unsafe_allow_html=True)
         st.code(sections['gp'], language=None)
 
-    # Bottom row — Genetic Counsellor centered
     _, bottom_mid, _ = st.columns([1, 2, 1])
     with bottom_mid:
         st.markdown(f"""
@@ -424,15 +437,12 @@ def render_output(clinvar, omim, sections):
     </div>
     ''', unsafe_allow_html=True)
 
-# ── Hero ───────────────────────────────────────────────────
+# ── Hero — FIX 2: two clean lines, no paragraph ────────────
 st.markdown('''
 <div class="hero-wrap">
     <div class="hero-title">Variant Explainer</div>
-    <div class="hero-desc">
-        Built for patients, clinicians, and genetic counsellors who need clear answers from complex genetic data.
-        Paste any genetic variant or disease name and get three tailored plain-English explanations instantly.
-        Data pulled live from ClinVar and OMIM.
-    </div>
+    <div class="hero-line1">Built for patients, clinicians, and genetic counsellors who need clear answers from complex genetic data.</div>
+    <div class="hero-line2">Paste any genetic variant or disease name and get three tailored plain-English explanations instantly.</div>
 </div>
 <hr class="hero-divider">
 ''', unsafe_allow_html=True)
@@ -452,6 +462,7 @@ common_variants = {
     "Tay-Sachs Disease": "HEXA c.1274_1277dupTATC",
 }
 
+# FIX 1 — each category maps ONLY to its own conditions
 more_conditions = {
     "Cancer Risk": {
         "BRCA1 c.5266dupC": "BRCA1 c.5266dupC",
@@ -480,7 +491,7 @@ more_conditions = {
     },
 }
 
-# ── Dropdown + More conditions toggle ─────────────────────
+# ── Dropdown + toggle ──────────────────────────────────────
 drop_col, more_col, spacer = st.columns([3, 1, 2])
 
 with drop_col:
@@ -496,11 +507,11 @@ with more_col:
         st.session_state.active_category = None
         st.rerun()
 
-# ── More conditions panel ──────────────────────────────────
+# ── More conditions panel — FIX 1: filter by active category only ──
 if st.session_state.show_more:
     st.markdown("<div style='margin-top:0.8rem'></div>", unsafe_allow_html=True)
 
-    # Category buttons in a row
+    # Row of category buttons
     cat_cols = st.columns(len(more_conditions))
     for i, category in enumerate(more_conditions.keys()):
         with cat_cols[i]:
@@ -515,12 +526,12 @@ if st.session_state.show_more:
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
-    # Show conditions for active category
+    # FIX 1 — only show conditions from the selected category
     if st.session_state.active_category:
-        st.markdown("<div style='margin-top:0.6rem; padding: 0.8rem 0;'>", unsafe_allow_html=True)
-        items = more_conditions[st.session_state.active_category]
-        cond_cols = st.columns(len(items))
-        for i, (label, variant) in enumerate(items.items()):
+        active_items = more_conditions[st.session_state.active_category]
+        st.markdown("<div style='margin-top:0.6rem; padding: 0.5rem 0;'>", unsafe_allow_html=True)
+        cond_cols = st.columns(len(active_items))
+        for i, (label, variant) in enumerate(active_items.items()):
             with cond_cols[i]:
                 st.markdown('<div class="condition-btn">', unsafe_allow_html=True)
                 if st.button(label, key=f"cond_{variant}"):
