@@ -85,12 +85,11 @@ html, body, [class*="css"] {
 .dot-amber { width:9px; height:9px; border-radius:50%; background:#d97706; display:inline-block; }
 .dot-red   { width:9px; height:9px; border-radius:50%; background:#dc2626; display:inline-block; }
 
-/* FIX 3 — cards expand to fit all content, nothing cut off */
 .card {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 14px;
-    padding: 1.4rem 1.5rem 1.4rem 1.5rem;
+    padding: 1.8rem 2rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     height: auto !important;
     min-height: 0 !important;
@@ -111,14 +110,14 @@ html, body, [class*="css"] {
     margin-bottom: 0.4rem;
 }
 .card-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #0F172A;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.8rem;
 }
 .card-body {
-    font-size: 0.91rem;
-    line-height: 1.75;
+    font-size: 0.95rem;
+    line-height: 1.8;
     color: #334155;
     font-weight: 400;
     word-wrap: break-word;
@@ -148,6 +147,25 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
+/* Category panel */
+.cat-panel {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+.cat-panel-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #94A3B8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+/* Inputs */
 .stTextInput > div > div > input {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
@@ -161,7 +179,6 @@ html, body, [class*="css"] {
     border-color: #2563eb !important;
     box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
 }
-
 .stSelectbox > div > div {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
@@ -169,6 +186,7 @@ html, body, [class*="css"] {
     color: #0F172A !important;
 }
 
+/* Buttons — default dark */
 .stButton > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -182,6 +200,7 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
+/* Category buttons — light style */
 .cat-btn > div > button {
     background: #F1F5F9 !important;
     color: #334155 !important;
@@ -190,26 +209,72 @@ html, body, [class*="css"] {
     padding: 0.35rem 1rem !important;
     font-size: 0.82rem !important;
     font-weight: 500 !important;
-    width: auto !important;
+    width: 100% !important;
 }
-.cat-btn > div > button:hover {
-    background: #E2E8F0 !important;
-    opacity: 1 !important;
+.cat-btn-active > div > button {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: 1px solid #0f172a !important;
+    border-radius: 8px !important;
+    padding: 0.35rem 1rem !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    width: 100% !important;
 }
+
+/* Condition buttons — blue ghost */
 .condition-btn > div > button {
     background: #FFFFFF !important;
     color: #2563eb !important;
     border: 1px solid #BFDBFE !important;
     border-radius: 8px !important;
     padding: 0.3rem 0.9rem !important;
-    font-size: 0.8rem !important;
+    font-size: 0.82rem !important;
     font-weight: 400 !important;
-    width: auto !important;
-    margin-bottom: 0.3rem !important;
+    width: 100% !important;
+    margin-bottom: 0.25rem !important;
+    text-align: left !important;
 }
 .condition-btn > div > button:hover {
     background: #EFF6FF !important;
     opacity: 1 !important;
+}
+
+/* More conditions toggle button */
+.more-btn > div > button {
+    background: #F1F5F9 !important;
+    color: #334155 !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    padding: 0.38rem 1rem !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    width: 100% !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 0.5rem;
+    border-bottom: 2px solid #E2E8F0;
+    background: transparent;
+}
+.stTabs [data-baseweb="tab"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 8px 8px 0 0 !important;
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    color: #64748B !important;
+}
+.stTabs [aria-selected="true"] {
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    border-bottom: 2px solid #0f172a !important;
+    font-weight: 600 !important;
+}
+.stTabs [data-baseweb="tab-panel"] {
+    padding: 1.2rem 0 0 0 !important;
 }
 
 .footer-info {
@@ -398,8 +463,14 @@ def render_output(clinvar, omim, sections):
     family_line = "This variant may be relevant for blood relatives — consider informing family members."
     card_border = f"card-{color}"
 
-    top_left, top_right = st.columns(2)
-    with top_left:
+    # ── Tabs for three audiences ───────────────────────────
+    tab1, tab2, tab3 = st.tabs([
+        "🧑 For the Patient",
+        "🩺 For the GP",
+        "🔬 For the Genetic Counsellor"
+    ])
+
+    with tab1:
         st.markdown(f"""
         <div class="card {card_border}">
             <div class="card-role">🧑 Patient</div>
@@ -410,7 +481,7 @@ def render_output(clinvar, omim, sections):
         """, unsafe_allow_html=True)
         st.code(sections['patient'], language=None)
 
-    with top_right:
+    with tab2:
         st.markdown(f"""
         <div class="card {card_border}">
             <div class="card-role">🩺 Clinician</div>
@@ -420,8 +491,7 @@ def render_output(clinvar, omim, sections):
         """, unsafe_allow_html=True)
         st.code(sections['gp'], language=None)
 
-    _, bottom_mid, _ = st.columns([1, 2, 1])
-    with bottom_mid:
+    with tab3:
         st.markdown(f"""
         <div class="card {card_border}">
             <div class="card-role">🔬 Specialist</div>
@@ -437,7 +507,7 @@ def render_output(clinvar, omim, sections):
     </div>
     ''', unsafe_allow_html=True)
 
-# ── Hero — FIX 2: two clean lines, no paragraph ────────────
+# ── Hero ───────────────────────────────────────────────────
 st.markdown('''
 <div class="hero-wrap">
     <div class="hero-title">Variant Explainer</div>
@@ -462,7 +532,6 @@ common_variants = {
     "Tay-Sachs Disease": "HEXA c.1274_1277dupTATC",
 }
 
-# FIX 1 — each category maps ONLY to its own conditions
 more_conditions = {
     "Cancer Risk": {
         "BRCA1 c.5266dupC": "BRCA1 c.5266dupC",
@@ -502,22 +571,25 @@ with drop_col:
 with more_col:
     st.markdown("<div style='margin-top:1.85rem'></div>", unsafe_allow_html=True)
     toggle_label = "✕ Close" if st.session_state.show_more else "More conditions →"
-    if st.button(toggle_label):
+    st.markdown('<div class="more-btn">', unsafe_allow_html=True)
+    if st.button(toggle_label, key="toggle_more"):
         st.session_state.show_more = not st.session_state.show_more
         st.session_state.active_category = None
         st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# ── More conditions panel — FIX 1: filter by active category only ──
+# ── More conditions panel ──────────────────────────────────
 if st.session_state.show_more:
-    st.markdown("<div style='margin-top:0.8rem'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-top:0.6rem'></div>", unsafe_allow_html=True)
+    categories = list(more_conditions.keys())
+    cat_cols = st.columns(len(categories))
 
-    # Row of category buttons
-    cat_cols = st.columns(len(more_conditions))
-    for i, category in enumerate(more_conditions.keys()):
+    for i, category in enumerate(categories):
         with cat_cols[i]:
             is_active = st.session_state.active_category == category
-            btn_label = f"▾ {category}" if is_active else category
-            st.markdown('<div class="cat-btn">', unsafe_allow_html=True)
+            btn_class = "cat-btn-active" if is_active else "cat-btn"
+            btn_label = f"▾ {category}" if is_active else f"▸ {category}"
+            st.markdown(f'<div class="{btn_class}">', unsafe_allow_html=True)
             if st.button(btn_label, key=f"cat_{category}"):
                 if st.session_state.active_category == category:
                     st.session_state.active_category = None
@@ -526,13 +598,28 @@ if st.session_state.show_more:
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
-    # FIX 1 — only show conditions from the selected category
+    # Show conditions ONLY for active category, directly below it
     if st.session_state.active_category:
+        active_idx = categories.index(st.session_state.active_category)
         active_items = more_conditions[st.session_state.active_category]
-        st.markdown("<div style='margin-top:0.6rem; padding: 0.5rem 0;'>", unsafe_allow_html=True)
-        cond_cols = st.columns(len(active_items))
-        for i, (label, variant) in enumerate(active_items.items()):
-            with cond_cols[i]:
+
+        # Align the dropdown under the correct category column
+        spacer_left = active_idx
+        spacer_right = len(categories) - active_idx - 1
+        cols = []
+        if spacer_left > 0:
+            cols += st.columns([spacer_left, 1, spacer_right]) if spacer_right > 0 else st.columns([spacer_left, 1])
+            panel_col = cols[1]
+        elif spacer_right > 0:
+            cols = st.columns([1, spacer_right])
+            panel_col = cols[0]
+        else:
+            panel_col = st
+
+        with panel_col:
+            st.markdown('<div class="cat-panel">', unsafe_allow_html=True)
+            st.markdown(f'<div class="cat-panel-label">{st.session_state.active_category}</div>', unsafe_allow_html=True)
+            for label, variant in active_items.items():
                 st.markdown('<div class="condition-btn">', unsafe_allow_html=True)
                 if st.button(label, key=f"cond_{variant}"):
                     st.session_state.selected_variant = variant
@@ -540,7 +627,7 @@ if st.session_state.show_more:
                     st.session_state.active_category = None
                     st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Text input ─────────────────────────────────────────────
 variant_input = st.text_input(
