@@ -143,67 +143,53 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
-/* More conditions overlay panel */
-.more-panel {
-    background: #1a1f2e;
-    border-radius: 14px;
-    padding: 1rem 1.2rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-}
-
-/* Floating dropdown */
-.dropdown-overlay {
-    position: relative;
-    z-index: 1000;
-}
-.floating-dropdown {
+/* More conditions box */
+.more-box {
     background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
-    padding: 0.6rem 0;
-    min-width: 220px;
-    margin-top: 0.3rem;
-    margin-bottom: 1rem;
-    border: 1px solid #F1F5F9;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    padding: 0.4rem 0;
+    margin-top: 0.4rem;
+    margin-bottom: 0.8rem;
+    max-width: 280px;
 }
-.dropdown-category-label {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #94A3B8;
-    padding: 0.4rem 1rem 0.5rem 1rem;
-    border-bottom: 1px solid #F1F5F9;
-    margin-bottom: 0.2rem;
-}
-.dropdown-item {
-    padding: 0.55rem 1rem;
+.more-box-cat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.52rem 1rem;
     font-size: 0.88rem;
+    font-weight: 500;
     color: #1e293b;
     cursor: pointer;
-    transition: background 0.12s;
+    border-radius: 6px;
+    margin: 0 0.3rem;
+    transition: background 0.1s;
+}
+.more-box-cat:hover { background: #F8FAFC; }
+.more-box-cat-active {
+    background: #F1F5F9;
+    color: #0f172a;
+    font-weight: 600;
+}
+.more-box-arrow { color: #94A3B8; font-size: 0.75rem; }
+.more-box-item {
+    padding: 0.42rem 1rem 0.42rem 1.6rem;
+    font-size: 0.83rem;
+    color: #2563eb;
+    cursor: pointer;
     border-radius: 6px;
     margin: 0 0.3rem;
 }
-.dropdown-item:hover {
-    background: #F1F5F9;
+.more-box-item:hover { background: #EFF6FF; }
+.more-box-divider {
+    border: none;
+    border-top: 1px solid #F1F5F9;
+    margin: 0.2rem 0.8rem;
 }
 
-/* Page dim overlay when dropdown open */
-.dim-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.08);
-    z-index: 999;
-    pointer-events: none;
-}
-
-/* Inputs */
+/* Buttons */
 .stTextInput > div > div > input {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
@@ -223,8 +209,6 @@ html, body, [class*="css"] {
     border-radius: 10px !important;
     color: #0F172A !important;
 }
-
-/* All buttons dark by default */
 .stButton > button {
     background: #0f172a !important;
     color: #ffffff !important;
@@ -238,54 +222,62 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
-/* Category pill buttons */
-.pill-btn > div > button {
-    background: #0f172a !important;
-    color: #ffffff !important;
+/* Category row buttons — invisible style */
+.cat-row-btn > div > button {
+    background: transparent !important;
+    color: #1e293b !important;
     border: none !important;
-    border-radius: 999px !important;
-    padding: 0.38rem 1.1rem !important;
-    font-size: 0.82rem !important;
+    border-radius: 6px !important;
+    padding: 0.45rem 0.8rem !important;
+    font-size: 0.88rem !important;
     font-weight: 500 !important;
-    width: auto !important;
-    letter-spacing: 0.01em !important;
+    width: 100% !important;
+    text-align: left !important;
+    box-shadow: none !important;
+    justify-content: flex-start !important;
 }
-.pill-btn-active > div > button {
-    background: #2563eb !important;
-    color: #ffffff !important;
+.cat-row-btn > div > button:hover {
+    background: #F8FAFC !important;
+    opacity: 1 !important;
+}
+.cat-row-btn-active > div > button {
+    background: #F1F5F9 !important;
+    color: #0f172a !important;
+    font-weight: 600 !important;
     border: none !important;
-    border-radius: 999px !important;
-    padding: 0.38rem 1.1rem !important;
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
-    width: auto !important;
+    border-radius: 6px !important;
+    padding: 0.45rem 0.8rem !important;
+    font-size: 0.88rem !important;
+    width: 100% !important;
+    text-align: left !important;
+    box-shadow: none !important;
 }
 
 /* Condition item buttons */
 .cond-item > div > button {
     background: transparent !important;
-    color: #1e293b !important;
+    color: #2563eb !important;
     border: none !important;
     border-radius: 6px !important;
-    padding: 0.5rem 1rem !important;
-    font-size: 0.88rem !important;
+    padding: 0.38rem 0.8rem 0.38rem 1.8rem !important;
+    font-size: 0.83rem !important;
     font-weight: 400 !important;
     width: 100% !important;
     text-align: left !important;
     box-shadow: none !important;
 }
 .cond-item > div > button:hover {
-    background: #F1F5F9 !important;
+    background: #EFF6FF !important;
     opacity: 1 !important;
 }
 
-/* More toggle button */
+/* More toggle */
 .more-toggle > div > button {
     background: #0f172a !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 10px !important;
-    padding: 0.5rem 1.2rem !important;
+    padding: 0.5rem 1.1rem !important;
     font-size: 0.85rem !important;
     font-weight: 500 !important;
     width: auto !important;
@@ -344,7 +336,21 @@ if "active_category" not in st.session_state:
 if "selected_variant" not in st.session_state:
     st.session_state.selected_variant = ""
 
-# ── Condition mapping ──────────────────────────────────────
+# ── Data ───────────────────────────────────────────────────
+common_variants = {
+    "Select a condition...": "",
+    "Breast/Ovarian Cancer (BRCA1)": "BRCA1 c.5266dupC",
+    "Cystic Fibrosis (CFTR)": "CFTR c.1521_1523delCTT",
+    "Huntington's Disease": "HTT c.54GCA",
+    "Hereditary Breast Cancer (BRCA2)": "BRCA2 c.5946delT",
+    "Lynch Syndrome": "MLH1 c.1852_1853delAAinsGC",
+    "Sickle Cell Anaemia": "HBB c.20A>T",
+    "Marfan Syndrome": "FBN1 c.1453C>T",
+    "Familial Hypercholesterolaemia": "LDLR c.1646G>A",
+    "Fragile X Syndrome": "FMR1 c.1A>G",
+    "Tay-Sachs Disease": "HEXA c.1274_1277dupTATC",
+}
+
 more_conditions = {
     "Cancer Risk": {
         "BRCA1 c.5266dupC": "BRCA1 c.5266dupC",
@@ -581,21 +587,7 @@ st.markdown('''
 <hr class="hero-divider">
 ''', unsafe_allow_html=True)
 
-# ── Common variants dropdown ───────────────────────────────
-common_variants = {
-    "Select a condition...": "",
-    "Breast/Ovarian Cancer (BRCA1)": "BRCA1 c.5266dupC",
-    "Cystic Fibrosis (CFTR)": "CFTR c.1521_1523delCTT",
-    "Huntington's Disease": "HTT c.54GCA",
-    "Hereditary Breast Cancer (BRCA2)": "BRCA2 c.5946delT",
-    "Lynch Syndrome": "MLH1 c.1852_1853delAAinsGC",
-    "Sickle Cell Anaemia": "HBB c.20A>T",
-    "Marfan Syndrome": "FBN1 c.1453C>T",
-    "Familial Hypercholesterolaemia": "LDLR c.1646G>A",
-    "Fragile X Syndrome": "FMR1 c.1A>G",
-    "Tay-Sachs Disease": "HEXA c.1274_1277dupTATC",
-}
-
+# ── Input row ──────────────────────────────────────────────
 drop_col, more_col, spacer = st.columns([3, 1, 2])
 
 with drop_col:
@@ -613,25 +605,21 @@ with more_col:
         st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── More conditions panel ──────────────────────────────────
+# ── Compact inline more-conditions box ────────────────────
 if st.session_state.show_more:
+    box_col, _ = st.columns([1, 3])
+    with box_col:
+        st.markdown('<div class="more-box">', unsafe_allow_html=True)
 
-    # Dim overlay when a category is open
-    if st.session_state.active_category:
-        st.markdown('<div class="dim-overlay"></div>', unsafe_allow_html=True)
-
-    # Dark pill row
-    st.markdown('<div class="more-panel">', unsafe_allow_html=True)
-    categories = list(more_conditions.keys())
-    pill_cols = st.columns(len(categories))
-
-    for i, category in enumerate(categories):
-        with pill_cols[i]:
+        categories = list(more_conditions.keys())
+        for idx, category in enumerate(categories):
             is_active = st.session_state.active_category == category
-            pill_class = "pill-btn-active" if is_active else "pill-btn"
-            pill_label = f"▾ {category}" if is_active else f"▸ {category}"
-            st.markdown(f'<div class="{pill_class}">', unsafe_allow_html=True)
-            if st.button(pill_label, key=f"pill_{category}"):
+            cat_class = "cat-row-btn-active" if is_active else "cat-row-btn"
+            arrow = "▾" if is_active else "›"
+            label = f"{arrow}  {category}"
+
+            st.markdown(f'<div class="{cat_class}">', unsafe_allow_html=True)
+            if st.button(label, key=f"cat_{category}"):
                 if st.session_state.active_category == category:
                     st.session_state.active_category = None
                 else:
@@ -639,37 +627,22 @@ if st.session_state.show_more:
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
+            # Inline expanded conditions
+            if is_active:
+                for label_cond, variant in more_conditions[category].items():
+                    st.markdown('<div class="cond-item">', unsafe_allow_html=True)
+                    if st.button(f"  {label_cond}", key=f"cond_{variant}"):
+                        st.session_state.selected_variant = variant
+                        st.session_state.show_more = False
+                        st.session_state.active_category = None
+                        st.rerun()
+                    st.markdown('</div>', unsafe_allow_html=True)
 
-    # Floating dropdown — aligned under active pill
-    if st.session_state.active_category:
-        active_idx = categories.index(st.session_state.active_category)
-        active_items = more_conditions[st.session_state.active_category]
+            # Divider between categories (not after last)
+            if idx < len(categories) - 1:
+                st.markdown('<hr class="more-box-divider">', unsafe_allow_html=True)
 
-        # Build column layout to align dropdown under pill
-        n = len(categories)
-        if active_idx == 0:
-            layout = [1] + [0.01] * (n - 1)
-        elif active_idx == n - 1:
-            layout = [0.01] * (n - 1) + [1]
-        else:
-            layout = [0.01] * active_idx + [1] + [0.01] * (n - active_idx - 1)
-
-        dropdown_cols = st.columns(layout)
-        with dropdown_cols[active_idx]:
-            st.markdown(f'''
-            <div class="floating-dropdown">
-                <div class="dropdown-category-label">{st.session_state.active_category}</div>
-            </div>
-            ''', unsafe_allow_html=True)
-            for label, variant in active_items.items():
-                st.markdown('<div class="cond-item">', unsafe_allow_html=True)
-                if st.button(label, key=f"cond_{variant}"):
-                    st.session_state.selected_variant = variant
-                    st.session_state.show_more = False
-                    st.session_state.active_category = None
-                    st.rerun()
-                st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Text input ─────────────────────────────────────────────
 variant_input = st.text_input(
