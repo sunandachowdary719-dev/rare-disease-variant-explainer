@@ -800,7 +800,12 @@ if st.session_state.search_history:
 drop_col, more_col, spacer = st.columns([3, 1, 2])
 
 with drop_col:
-    selected = st.selectbox("Quick select a condition:", list(common_variants.keys()))
+    selected = st.selectbox(
+        "Quick select a condition:",
+        list(common_variants.keys()),
+        index=0,
+        key=f"quickselect_{st.session_state.get('quick_select_key', 0)}"
+    )
     if common_variants[selected]:
         st.session_state.selected_variant = common_variants[selected]
 
@@ -844,6 +849,7 @@ if st.session_state.show_more:
                     st.session_state.selected_variant = items[choice]
                     st.session_state.show_more = False
                     st.session_state.active_category = None
+                    st.session_state["quick_select_key"] = st.session_state.get("quick_select_key", 0) + 1
                     st.rerun()
 
         st.markdown('</div>', unsafe_allow_html=True)
