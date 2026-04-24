@@ -222,6 +222,9 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
+/* ADD THIS LINE RIGHT HERE */
+.cond-item .stButton > button { background: transparent !important; color: #374151 !important; border: none !important; box-shadow: none !important; }
+
 /* Category row buttons — invisible style */
 .cat-row-btn > div > button {
     background: transparent !important;
@@ -253,9 +256,11 @@ html, body, [class*="css"] {
     box-shadow: none !important;
 }
 
-/* Condition item buttons — plain text style */
-.cond-item > div > button {
+.cond-item > div > button,
+.cond-item > div > button:focus,
+.cond-item > div > button:active {
     background: transparent !important;
+    background-color: transparent !important;
     color: #374151 !important;
     border: none !important;
     border-radius: 4px !important;
@@ -266,9 +271,10 @@ html, body, [class*="css"] {
     text-align: left !important;
     box-shadow: none !important;
     letter-spacing: 0 !important;
+    outline: none !important;
 }
 .cond-item > div > button:hover {
-    background: #F3F4F6 !important;
+    background-color: #F3F4F6 !important;
     color: #111827 !important;
     opacity: 1 !important;
 }
