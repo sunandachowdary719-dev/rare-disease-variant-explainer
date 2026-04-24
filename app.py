@@ -14,182 +14,192 @@ st.set_page_config(
 # ── Custom CSS ─────────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 html, body, [class*="css"] {
-    font-family: 'DM Sans', sans-serif;
-    background-color: #0a0f1e;
-    color: #e8eaf0;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa;
+    color: #1a1a2e;
 }
 
-.main { background-color: #0a0f1e; }
+.main {
+    background-color: #f5f7fa;
+}
+
+.block-container {
+    padding-top: 3rem;
+    max-width: 720px;
+}
 
 .hero-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 3.2rem;
-    line-height: 1.15;
-    color: #ffffff;
-    margin-bottom: 0.3rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
 }
 
 .hero-subtitle {
-    font-size: 1.05rem;
-    color: #8892a4;
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    color: #64748b;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    line-height: 1.65;
 }
 
 .section-card {
-    background: #111827;
-    border: 1px solid #1e2d45;
+    background: #ffffff;
+    border: 1px solid #e8edf3;
     border-radius: 16px;
-    padding: 1.8rem 2rem;
-    margin-bottom: 1.2rem;
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .section-label {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 0.6rem;
-    padding: 0.3rem 0.8rem;
+    margin-bottom: 0.7rem;
+    padding: 0.28rem 0.75rem;
     border-radius: 20px;
     display: inline-block;
 }
 
 .label-patient {
-    background: #0d2137;
-    color: #38bdf8;
+    background: #eff6ff;
+    color: #2563eb;
 }
 
 .label-gp {
-    background: #0d2b1e;
-    color: #34d399;
+    background: #f0fdf4;
+    color: #16a34a;
 }
 
 .label-counsellor {
-    background: #1e1637;
-    color: #a78bfa;
+    background: #faf5ff;
+    color: #7c3aed;
 }
 
 .section-text {
-    font-size: 1rem;
+    font-size: 0.97rem;
     line-height: 1.75;
-    color: #cbd5e1;
-    font-weight: 300;
+    color: #334155;
+    font-weight: 400;
+    margin: 0;
 }
 
 .badge-high {
-    background: #052e16;
-    color: #4ade80;
-    border: 1px solid #166534;
-    padding: 0.5rem 1.2rem;
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    padding: 0.45rem 1.1rem;
     border-radius: 8px;
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     font-weight: 500;
     display: inline-block;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .badge-mid {
-    background: #1c1a09;
-    color: #facc15;
-    border: 1px solid #713f12;
-    padding: 0.5rem 1.2rem;
+    background: #fefce8;
+    color: #a16207;
+    border: 1px solid #fde68a;
+    padding: 0.45rem 1.1rem;
     border-radius: 8px;
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     font-weight: 500;
     display: inline-block;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .badge-low {
-    background: #1a1f2e;
-    color: #94a3b8;
-    border: 1px solid #334155;
-    padding: 0.5rem 1.2rem;
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    padding: 0.45rem 1.1rem;
     border-radius: 8px;
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     font-weight: 500;
     display: inline-block;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .variant-found {
-    background: #0d2137;
-    border: 1px solid #1e4976;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
     border-radius: 10px;
-    padding: 0.8rem 1.2rem;
-    color: #38bdf8;
-    font-size: 0.9rem;
+    padding: 0.75rem 1.1rem;
+    color: #1d4ed8;
+    font-size: 0.88rem;
     margin-bottom: 1rem;
 }
 
 .divider {
     border: none;
-    border-top: 1px solid #1e2d45;
-    margin: 2rem 0;
+    border-top: 1px solid #e8edf3;
+    margin: 1.8rem 0;
 }
 
 .footer-text {
-    color: #4b5563;
-    font-size: 0.78rem;
+    color: #94a3b8;
+    font-size: 0.76rem;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
-/* Input styling */
+/* Input */
 .stTextInput > div > div > input {
-    background-color: #111827 !important;
-    border: 1px solid #1e2d45 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 10px !important;
-    color: #e8eaf0 !important;
-    font-family: 'DM Sans', sans-serif !important;
-    font-size: 1rem !important;
-    padding: 0.75rem 1rem !important;
+    color: #0f172a !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.97rem !important;
+    padding: 0.7rem 1rem !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
 }
 
 .stTextInput > div > div > input:focus {
-    border-color: #38bdf8 !important;
-    box-shadow: 0 0 0 2px rgba(56,189,248,0.15) !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
 }
 
-/* Button styling */
+/* Button */
 .stButton > button {
-    background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;
-    color: white !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
     border: none !important;
     border-radius: 10px !important;
     padding: 0.65rem 2rem !important;
-    font-family: 'DM Sans', sans-serif !important;
-    font-size: 0.95rem !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.93rem !important;
     font-weight: 500 !important;
-    letter-spacing: 0.02em !important;
-    transition: opacity 0.2s !important;
     width: 100% !important;
+    transition: background 0.2s !important;
 }
 
 .stButton > button:hover {
-    opacity: 0.88 !important;
+    background: #1e293b !important;
 }
 
 /* Selectbox */
 .stSelectbox > div > div {
-    background-color: #111827 !important;
-    border: 1px solid #1e2d45 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 10px !important;
-    color: #e8eaf0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
 }
 
-/* Hide streamlit default elements */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
-
 # ── Keys ───────────────────────────────────────────────────
 ANTHROPIC_KEY = st.secrets["ANTHROPIC_KEY"]
 OMIM_KEY = st.secrets["OMIM_KEY"]
