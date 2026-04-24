@@ -253,21 +253,23 @@ html, body, [class*="css"] {
     box-shadow: none !important;
 }
 
-/* Condition item buttons */
+/* Condition item buttons — plain text style */
 .cond-item > div > button {
     background: transparent !important;
-    color: #2563eb !important;
+    color: #374151 !important;
     border: none !important;
-    border-radius: 6px !important;
-    padding: 0.38rem 0.8rem 0.38rem 1.8rem !important;
-    font-size: 0.83rem !important;
+    border-radius: 4px !important;
+    padding: 0.32rem 0.8rem 0.32rem 1.6rem !important;
+    font-size: 0.82rem !important;
     font-weight: 400 !important;
     width: 100% !important;
     text-align: left !important;
     box-shadow: none !important;
+    letter-spacing: 0 !important;
 }
 .cond-item > div > button:hover {
-    background: #EFF6FF !important;
+    background: #F3F4F6 !important;
+    color: #111827 !important;
     opacity: 1 !important;
 }
 
