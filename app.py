@@ -143,20 +143,24 @@ html, body, [class*="css"] {
     margin-bottom: 1rem;
 }
 
+/* More conditions box */
 .more-box {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-    padding: 0.4rem 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 0.6rem 0.8rem;
     margin-top: 0.4rem;
     margin-bottom: 0.8rem;
-    max-width: 280px;
 }
-.more-box-divider {
-    border: none;
-    border-top: 1px solid #F1F5F9;
-    margin: 0.2rem 0.8rem;
+.more-box-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #94A3B8;
+    margin-bottom: 0.5rem;
+    padding: 0 0.2rem;
 }
 
 /* Global buttons */
@@ -173,49 +177,34 @@ html, body, [class*="css"] {
 }
 .stButton > button:hover { opacity: 0.84 !important; }
 
-/* Category buttons inside more-box */
-.more-box .stButton > button {
+/* Category buttons */
+.cat-btn > div > button {
     background: transparent !important;
     color: #1e293b !important;
     border: none !important;
     border-radius: 6px !important;
-    padding: 0.45rem 0.8rem !important;
-    font-size: 0.88rem !important;
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.87rem !important;
     font-weight: 500 !important;
     width: 100% !important;
     text-align: left !important;
     box-shadow: none !important;
 }
-.more-box .stButton > button:hover {
-    background-color: #F8FAFC !important;
+.cat-btn > div > button:hover {
+    background: #F1F5F9 !important;
     opacity: 1 !important;
 }
-
-/* Nuclear override for condition items */
-div.cond-item button,
-div.cond-item > div > button,
-div.cond-item .stButton button,
-[class*="cond-item"] button {
-    all: unset !important;
-    display: block !important;
+.cat-btn-active > div > button {
+    background: #F1F5F9 !important;
+    color: #0f172a !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.87rem !important;
+    font-weight: 600 !important;
     width: 100% !important;
-    padding: 0.35rem 0.8rem 0.35rem 1.4rem !important;
-    font-size: 0.82rem !important;
-    font-weight: 400 !important;
-    color: #374151 !important;
-    background: transparent !important;
-    cursor: pointer !important;
-    border-radius: 4px !important;
-    box-sizing: border-box !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif !important;
-    line-height: 1.4 !important;
-}
-div.cond-item button:hover,
-div.cond-item > div > button:hover,
-div.cond-item .stButton button:hover,
-[class*="cond-item"] button:hover {
-    background: #F3F4F6 !important;
-    color: #111827 !important;
+    text-align: left !important;
+    box-shadow: none !important;
 }
 
 /* More toggle */
@@ -573,34 +562,38 @@ with more_col:
         st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── More conditions box ────────────────────────────────────
+# ── More conditions — selectbox approach ──────────────────
 if st.session_state.show_more:
     box_col, _ = st.columns([1, 3])
     with box_col:
         st.markdown('<div class="more-box">', unsafe_allow_html=True)
-        categories = list(more_conditions.keys())
+        st.markdown('<div class="more-box-label">Browse by category</div>', unsafe_allow_html=True)
 
-        for idx, category in enumerate(categories):
+        for category, items in more_conditions.items():
             is_active = st.session_state.active_category == category
             arrow = "▾" if is_active else "›"
+            btn_class = "cat-btn-active" if is_active else "cat-btn"
 
+            st.markdown(f'<div class="{btn_class}">', unsafe_allow_html=True)
             if st.button(f"{arrow}  {category}", key=f"cat_{category}"):
                 st.session_state.active_category = None if is_active else category
                 st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
 
+            # ── Selectbox for conditions ───────────────────
             if is_active:
-                for label_cond, variant in more_conditions[category].items():
-                    safe_id = re.sub(r'[^a-zA-Z0-9]', '', variant)
-                    st.markdown(f'<div id="cond-{safe_id}" class="cond-item">', unsafe_allow_html=True)
-                    if st.button(label_cond, key=f"cond_{variant}"):
-                        st.session_state.selected_variant = variant
-                        st.session_state.show_more = False
-                        st.session_state.active_category = None
-                        st.rerun()
-                    st.markdown('</div>', unsafe_allow_html=True)
-
-            if idx < len(categories) - 1:
-                st.markdown('<hr class="more-box-divider">', unsafe_allow_html=True)
+                options = ["Select a condition..."] + list(items.keys())
+                choice = st.selectbox(
+                    label=f"{category} conditions",
+                    options=options,
+                    key=f"select_{category}",
+                    label_visibility="collapsed"
+                )
+                if choice != "Select a condition...":
+                    st.session_state.selected_variant = items[choice]
+                    st.session_state.show_more = False
+                    st.session_state.active_category = None
+                    st.rerun()
 
         st.markdown('</div>', unsafe_allow_html=True)
 
