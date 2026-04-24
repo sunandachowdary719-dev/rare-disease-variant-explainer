@@ -8,71 +8,55 @@ import re
 st.set_page_config(
     page_title="Variant Explainer",
     page_icon="🧬",
-    layout="centered"
+    layout="wide"
 )
 
-# ── Dark mode toggle ───────────────────────────────────────
-if "dark_mode" not in st.session_state:
-    st.session_state.dark_mode = False
-
-col_toggle1, col_toggle2 = st.columns([6, 1])
-with col_toggle2:
-    if st.button("🌙" if not st.session_state.dark_mode else "☀️"):
-        st.session_state.dark_mode = not st.session_state.dark_mode
-        st.rerun()
-
-dark = st.session_state.dark_mode
-
-# ── CSS ────────────────────────────────────────────────────
-bg          = "#0E1117" if dark else "#F9FAFB"
-bg2         = "#1C1C1E" if dark else "#FFFFFF"
-text        = "#F0F0F0" if dark else "#0F172A"
-subtext     = "#A0A0A8" if dark else "#64748B"
-border      = "#2C2C2E" if dark else "#E2E8F0"
-input_bg    = "#1C1C1E" if dark else "#FFFFFF"
-card_shadow = "0 1px 6px rgba(0,0,0,0.18)" if dark else "0 1px 4px rgba(0,0,0,0.08)"
-
-st.markdown(f"""
+st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-html, body, [class*="css"] {{
+html, body, [class*="css"] {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
-    background-color: {bg};
-    color: {text};
-}}
-.main {{ background-color: {bg}; }}
-.block-container {{
-    padding-top: 1.5rem;
-    max-width: 860px;
-    margin: 0 auto;
-}}
+    background-color: #F9FAFB;
+    color: #0F172A;
+}
+.main { background-color: #F9FAFB; }
+.block-container {
+    padding-top: 4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    max-width: 100%;
+}
 
 /* Hero */
-.hero-title {{
-    font-size: 2.4rem;
+.hero-wrap {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+.hero-title {
+    font-size: 3.8rem;
     font-weight: 700;
-    color: {text};
-    letter-spacing: -0.03em;
-    margin-bottom: 0.6rem;
-    line-height: 1.15;
-}}
-.hero-desc {{
-    font-size: 0.97rem;
-    color: {subtext};
+    color: #0F172A;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+.hero-desc {
+    font-size: 1rem;
+    color: #64748B;
     line-height: 1.7;
     font-weight: 400;
-    max-width: 600px;
-    margin-bottom: 1.8rem;
-}}
-.hero-divider {{
+    max-width: 560px;
+    margin: 0 auto 0 auto;
+}
+.hero-divider {
     border: none;
-    border-top: 1px solid {border};
-    margin: 1.5rem 0 1.8rem 0;
-}}
+    border-top: 1px solid #E2E8F0;
+    margin: 2rem 0;
+}
 
 /* Badges */
-.badge-done {{
+.badge-done {
     display: inline-block;
     background: #16a34a;
     color: white;
@@ -82,64 +66,63 @@ html, body, [class*="css"] {{
     border-radius: 12px;
     margin-bottom: 1rem;
     letter-spacing: 0.03em;
-}}
-.confidence-row {{
+}
+.confidence-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1.2rem;
     font-size: 0.85rem;
-    color: {subtext};
-}}
-.dot-green {{ width:9px; height:9px; border-radius:50%; background:#16a34a; display:inline-block; }}
-.dot-amber {{ width:9px; height:9px; border-radius:50%; background:#d97706; display:inline-block; }}
-.dot-red   {{ width:9px; height:9px; border-radius:50%; background:#dc2626; display:inline-block; }}
+    color: #64748B;
+}
+.dot-green { width:9px; height:9px; border-radius:50%; background:#16a34a; display:inline-block; }
+.dot-amber { width:9px; height:9px; border-radius:50%; background:#d97706; display:inline-block; }
+.dot-red   { width:9px; height:9px; border-radius:50%; background:#dc2626; display:inline-block; }
 
 /* Cards */
-.card {{
-    background: {bg2};
-    border: 1px solid {border};
+.card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     border-radius: 14px;
-    padding: 1.3rem 1.4rem 1rem 1.4rem;
-    box-shadow: {card_shadow};
+    padding: 1.4rem 1.5rem 1.1rem 1.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     height: 100%;
-    position: relative;
-}}
-.card-green {{ border-left: 3px solid #16a34a; }}
-.card-amber {{ border-left: 3px solid #d97706; }}
-.card-red   {{ border-left: 3px solid #dc2626; }}
+}
+.card-green { border-left: 3px solid #16a34a; }
+.card-amber { border-left: 3px solid #d97706; }
+.card-red   { border-left: 3px solid #dc2626; }
 
-.card-role {{
+.card-role {
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: {subtext};
-    margin-bottom: 0.5rem;
-}}
-.card-title {{
+    color: #94A3B8;
+    margin-bottom: 0.4rem;
+}
+.card-title {
     font-size: 1rem;
     font-weight: 600;
-    color: {text};
+    color: #0F172A;
     margin-bottom: 0.7rem;
-}}
-.card-body {{
+}
+.card-body {
     font-size: 0.91rem;
-    line-height: 1.72;
-    color: {"#C8C8D0" if dark else "#334155"};
+    line-height: 1.75;
+    color: #334155;
     font-weight: 400;
-}}
-.family-line {{
-    font-size: 0.82rem;
-    color: {"#7878A0" if dark else "#94a3b8"};
+}
+.family-line {
+    font-size: 0.81rem;
+    color: #94A3B8;
     font-style: italic;
-    margin-top: 0.8rem;
+    margin-top: 0.9rem;
     padding-top: 0.7rem;
-    border-top: 1px solid {border};
-}}
+    border-top: 1px solid #F1F5F9;
+}
 
 /* Section label */
-.section-label {{
+.section-label {
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -148,85 +131,82 @@ html, body, [class*="css"] {{
     border-radius: 20px;
     display: inline-block;
     margin-bottom: 1rem;
-}}
-.label-example {{ background: {"#1e3a2f" if dark else "#f0fdf4"}; color: {"#4ade80" if dark else "#16a34a"}; }}
+}
+.label-example { background: #f0fdf4; color: #16a34a; }
 
-/* Ghost button */
-.ghost-btn {{
-    display: inline-block;
-    font-size: 0.8rem;
-    color: {subtext};
-    border: 1px solid {border};
-    border-radius: 8px;
-    padding: 0.3rem 0.8rem;
-    cursor: pointer;
-    background: transparent;
-    margin-bottom: 1.2rem;
-    font-family: inherit;
-}}
+/* Variant chip */
+.variant-chip {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    color: #1d4ed8;
+    font-size: 0.86rem;
+    margin-bottom: 1rem;
+}
 
 /* Input */
-.stTextInput > div > div > input {{
-    background-color: {input_bg} !important;
-    border: 1px solid {border} !important;
+.stTextInput > div > div > input {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
     border-radius: 10px !important;
-    color: {text} !important;
+    color: #0F172A !important;
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif !important;
     font-size: 0.95rem !important;
     padding: 0.7rem 1rem !important;
-}}
-.stTextInput > div > div > input:focus {{
+}
+.stTextInput > div > div > input:focus {
     border-color: #2563eb !important;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.12) !important;
-}}
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
+}
 
 /* Selectbox */
-.stSelectbox > div > div {{
-    background-color: {input_bg} !important;
-    border: 1px solid {border} !important;
+.stSelectbox > div > div {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
     border-radius: 10px !important;
-    color: {text} !important;
-}}
+    color: #0F172A !important;
+}
 
-/* Button */
-.stButton > button {{
-    background: {"#F0F0F0" if dark else "#0f172a"} !important;
-    color: {"#0f172a" if dark else "#ffffff"} !important;
+/* Main explain button */
+.stButton > button {
+    background: #0f172a !important;
+    color: #ffffff !important;
     border: none !important;
     border-radius: 10px !important;
-    padding: 0.6rem 1.4rem !important;
+    padding: 0.62rem 1.6rem !important;
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif !important;
-    font-size: 0.9rem !important;
+    font-size: 0.92rem !important;
     font-weight: 500 !important;
     transition: opacity 0.15s !important;
-}}
-.stButton > button:hover {{ opacity: 0.85 !important; }}
+}
+.stButton > button:hover { opacity: 0.84 !important; }
 
 /* Footer */
-.footer-info {{
+.footer-info {
     font-size: 0.76rem;
-    color: {subtext};
+    color: #94A3B8;
     text-align: center;
     margin-top: 2.5rem;
     padding-top: 1.2rem;
-    border-top: 1px solid {border};
+    border-top: 1px solid #E2E8F0;
     line-height: 1.6;
-}}
+}
 
-/* Variant found chip */
-.variant-chip {{
-    background: {"#1e3050" if dark else "#eff6ff"};
-    border: 1px solid {"#2a4a7a" if dark else "#bfdbfe"};
-    border-radius: 10px;
-    padding: 0.65rem 1rem;
-    color: {"#60a5fa" if dark else "#1d4ed8"};
-    font-size: 0.86rem;
-    margin-bottom: 1rem;
-}}
+/* More conditions expander — compact */
+.streamlit-expanderHeader {
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    color: #64748B !important;
+    background: #F1F5F9 !important;
+    border-radius: 8px !important;
+    padding: 0.3rem 0.8rem !important;
+    border: 1px solid #E2E8F0 !important;
+}
 
-#MainMenu {{visibility: hidden;}}
-footer {{visibility: hidden;}}
-header {{visibility: hidden;}}
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -310,7 +290,7 @@ def explain_variant(clinvar, omim):
     msg = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=1200,
-        messages=[{"role":"user","content":f"""You are a genetics expert. Write three plain-English explanations. Use plain sentences only — no markdown, no bullet points, no ## headers, no bold, no dashes.
+        messages=[{"role":"user","content":f"""You are a genetics expert. Write three plain-English explanations. Use plain sentences only — no markdown, no bullet points, no headers, no bold, no dashes.
 
 CLINVAR DATA:
 - Variant: {clinvar['variant_name']}
@@ -325,18 +305,18 @@ OMIM DATA:
 - Diseases: {', '.join(omim['diseases'])}
 - Inheritance: {omim['inheritance']}
 
-Write exactly three sections. Use these exact headers on their own line:
+Write exactly three sections with these exact headers on their own line:
 
 PATIENT EXPLANATION:
-2-3 plain sentences. No jargon. What this means for their health.
+2-3 plain sentences. No jargon.
 End with exactly: Note: This is not medical advice.
 
 GP EXPLANATION:
-3-4 plain sentences. Clinical context, inheritance pattern, recommended action.
+3-4 plain sentences. Clinical context, inheritance, recommended action.
 End with exactly: Note: This is not medical advice.
 
 GENETIC COUNSELLOR EXPLANATION:
-4-5 plain sentences. Variant classification, evidence strength, molecular mechanism, family implications.
+4-5 plain sentences. Classification, evidence, mechanism, family implications.
 End with exactly: Note: This is not medical advice."""}]
     )
     return msg.content[0].text
@@ -377,7 +357,9 @@ def render_output(clinvar, omim, sections, is_example=False):
     else:
         st.markdown('<span class="badge-done">Done</span>', unsafe_allow_html=True)
 
-    color, dot_class, conf_label = get_confidence(clinvar["review_status"], clinvar["clinical_significance"])
+    color, dot_class, conf_label = get_confidence(
+        clinvar["review_status"], clinvar["clinical_significance"]
+    )
     st.markdown(f'''
     <div class="confidence-row">
         <span class="{dot_class}"></span>
@@ -425,22 +407,26 @@ def render_output(clinvar, omim, sections, is_example=False):
         """, unsafe_allow_html=True)
         st.code(sections['counsellor'], language=None)
 
-    st.markdown(f'''
+    st.markdown('''
     <div class="footer-info">
         ⓘ Data sourced from ClinVar (NCBI) and OMIM. For educational purposes only — always consult a qualified healthcare professional.
     </div>
     ''', unsafe_allow_html=True)
 
 # ── Hero ───────────────────────────────────────────────────
-st.markdown('<p class="hero-title">Variant Explainer</p>', unsafe_allow_html=True)
-st.markdown('''<p class="hero-desc">
-    Built for patients, clinicians, and genetic counsellors who need clear answers from complex genetic data.<br>
-    Paste any genetic variant or disease name. Get three tailored explanations — instantly.<br>
-    Data pulled live from ClinVar and OMIM, translated into plain English.
-</p>''', unsafe_allow_html=True)
-st.markdown('<hr class="hero-divider">', unsafe_allow_html=True)
+st.markdown('''
+<div class="hero-wrap">
+    <div class="hero-title">Variant Explainer</div>
+    <div class="hero-desc">
+        Built for patients, clinicians, and genetic counsellors who need clear answers from complex genetic data.<br>
+        Paste any genetic variant or disease name and get three tailored plain-English explanations instantly.<br>
+        Data pulled live from ClinVar and OMIM.
+    </div>
+</div>
+<hr class="hero-divider">
+''', unsafe_allow_html=True)
 
-# ── Input ──────────────────────────────────────────────────
+# ── Input row ──────────────────────────────────────────────
 common_variants = {
     "Select a condition...": "",
     "Breast/Ovarian Cancer (BRCA1)": "BRCA1 c.5266dupC",
@@ -455,27 +441,58 @@ common_variants = {
     "Tay-Sachs Disease": "HEXA c.1274_1277dupTATC",
 }
 
-with st.expander("More conditions →"):
-    st.markdown("**Cancer Risk**")
-    st.code("BRCA1 c.5266dupC | BRCA2 c.5946delT | MLH1 c.1852_1853delAAinsGC | TP53 c.817C>T")
-    st.markdown("**Cardiac**")
-    st.code("MYBPC3 c.2905+1G>A | SCN5A c.4900G>A | LDLR c.1646G>A")
-    st.markdown("**Neurological**")
-    st.code("HTT c.54GCA | FMR1 c.1A>G | LRRK2 c.6055G>A")
-    st.markdown("**Metabolic**")
-    st.code("CFTR c.1521_1523delCTT | HBB c.20A>T | HEXA c.1274_1277dupTATC")
-    st.markdown("**Other**")
-    st.code("FBN1 c.1453C>T | PTEN c.388C>T")
+more_conditions = {
+    "Cancer Risk": {
+        "BRCA1 c.5266dupC": "BRCA1 c.5266dupC",
+        "BRCA2 c.5946delT": "BRCA2 c.5946delT",
+        "MLH1 c.1852_1853delAAinsGC": "MLH1 c.1852_1853delAAinsGC",
+        "TP53 c.817C>T": "TP53 c.817C>T",
+    },
+    "Cardiac": {
+        "MYBPC3 c.2905+1G>A": "MYBPC3 c.2905+1G>A",
+        "SCN5A c.4900G>A": "SCN5A c.4900G>A",
+        "LDLR c.1646G>A": "LDLR c.1646G>A",
+    },
+    "Neurological": {
+        "Huntington's Disease": "HTT c.54GCA",
+        "Parkinson's (LRRK2)": "LRRK2 c.6055G>A",
+        "Fragile X": "FMR1 c.1A>G",
+    },
+    "Metabolic": {
+        "Cystic Fibrosis": "CFTR c.1521_1523delCTT",
+        "Sickle Cell": "HBB c.20A>T",
+        "Tay-Sachs": "HEXA c.1274_1277dupTATC",
+    },
+    "Other": {
+        "Marfan Syndrome": "FBN1 c.1453C>T",
+        "PTEN Hamartoma": "PTEN c.388C>T",
+    },
+}
 
-selected = st.selectbox("Quick select a condition:", list(common_variants.keys()))
-default_variant = common_variants[selected]
+# Dropdown + More conditions side by side
+drop_col, more_col = st.columns([4, 1])
+
+with drop_col:
+    selected = st.selectbox("Quick select a condition:", list(common_variants.keys()))
+    default_variant = common_variants[selected]
+
+with more_col:
+    st.markdown("<div style='margin-top:1.85rem'></div>", unsafe_allow_html=True)
+    show_more = st.button("More conditions →")
+
+if show_more:
+    for category, items in more_conditions.items():
+        st.markdown(f"**{category}**")
+        for label, variant in items.items():
+            st.code(f"{label}: {variant}")
+
 variant_input = st.text_input(
     "Or type any variant or disease name:",
     value=default_variant,
     placeholder="e.g. BRCA1 c.5266dupC or 'cystic fibrosis'"
 )
 
-run_col, _ = st.columns([2, 4])
+run_col, _ = st.columns([2, 5])
 with run_col:
     run_button = st.button("Explain this variant")
 
@@ -503,7 +520,7 @@ if not run_button and not st.session_state.example_shown:
     example_sections = {
         "patient": "You have a change in your BRCA1 gene that significantly increases your lifetime risk of breast and ovarian cancer. This change is well-studied and classified as disease-causing by leading genetics experts. Your doctor will discuss screening options and preventive measures with you. Note: This is not medical advice.",
         "gp": "This patient carries a pathogenic frameshift variant in BRCA1 (c.5266dupC), classified as disease-causing by expert panel review across 94 ClinVar submissions. BRCA1-related cancer predisposition follows autosomal dominant inheritance, meaning first-degree relatives have a 50% chance of carrying the variant. Referral to clinical genetics and discussion of enhanced surveillance or risk-reduction options is recommended. Note: This is not medical advice.",
-        "counsellor": "The variant NM_007294.4(BRCA1):c.5266dupC introduces a frameshift causing premature protein truncation (p.Gln1756ProfsTer25), classified Pathogenic with expert panel review across 94 submissions — the highest ClinVar evidence tier. Loss of BRCA1 function impairs homologous recombination DNA repair, conferring substantially elevated lifetime risk for breast (~70%) and ovarian (~44%) cancer. Inheritance is autosomal dominant; cascade testing of first-degree relatives is indicated. Discuss PARP inhibitor eligibility and surgical risk-reduction options as appropriate. Note: This is not medical advice.",
+        "counsellor": "The variant NM_007294.4(BRCA1):c.5266dupC introduces a frameshift causing premature protein truncation (p.Gln1756ProfsTer25), classified Pathogenic with expert panel review across 94 submissions. Loss of BRCA1 function impairs homologous recombination DNA repair, conferring substantially elevated lifetime risk for breast and ovarian cancer. Inheritance is autosomal dominant; cascade testing of first-degree relatives is indicated. Note: This is not medical advice.",
     }
     render_output(example_clinvar, example_omim, example_sections, is_example=True)
 
